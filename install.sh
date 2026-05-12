@@ -7,6 +7,8 @@
 #   curl -fsSL https://kopi.readinghero.xyz/install.sh | bash
 #   curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash
 #
+# Non-interactive mode (curl | bash): installs everything, skips gateway config.
+# Interactive mode (bash install.sh): full install + gateway setup at the end.
 # ═══════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
@@ -29,6 +31,8 @@ PROVISION_URL="https://kopi.readinghero.xyz/kp/v1/provision"
 PROVISION_TOKEN="kopi-provision-2026"
 REPO_URL="https://github.com/LINYIQ66/kopi-agent.git"
 MIN_PYTHON_VERSION="3.11"
+IS_TTY=false
+[[ -t 0 ]] && IS_TTY=true
 
 # ── Helpers ────────────────────────────────────────────────────────────
 info()  { echo -e "${BLUE}ℹ${NC}  $*"; }
@@ -49,7 +53,7 @@ banner() {
 EOF
     echo -e "${NC}"
     echo -e "${DIM}  KOPI O Agent — by Xing Bao Ku PTE LTD${NC}"
-    echo -e "${DIM}  一键安装，傻瓜式部署${NC}"
+    echo -e "${DIM}  一键安装，一步到位${NC}"
     echo ""
 }
 
@@ -80,6 +84,8 @@ detect_os() {
 # ── Dependency Installation ────────────────────────────────────────────
 install_deps_debian() {
     step "安装系统依赖"
+    # Fix any interrupted dpkg first
+    dpkg --configure -a 2>/dev/null || true
     apt-get update -qq
     apt-get install -y -qq \
         git curl wget python3 python3-pip python3-venv \
@@ -124,7 +130,7 @@ install_deps() {
 # ── Python Version Check ───────────────────────────────────────────────
 check_python() {
     step "检查 Python 版本"
-    
+
     PYTHON_CMD=""
     for cmd in python3.12 python3.11 python3; do
         if command -v "$cmd" &>/dev/null; then
@@ -142,7 +148,7 @@ check_python() {
         warn "Python ${MIN_PYTHON_VERSION}+ 未找到，尝试安装..."
         install_python
     fi
-    
+
     PYTHON_VERSION=$("$PYTHON_CMD" --version 2>&1)
     ok "Python: ${PYTHON_VERSION} (${PYTHON_CMD})"
 }
@@ -171,7 +177,7 @@ install_python() {
 # ── Clone & Install KOPI Agent ─────────────────────────────────────────
 install_kopi() {
     step "安装 KOPI O Agent"
-    
+
     if [[ -d "$KOPI_HOME/.git" ]]; then
         info "检测到已有安装，更新中..."
         cd "$KOPI_HOME"
@@ -198,7 +204,7 @@ install_kopi() {
 # ── Create CLI Wrapper ─────────────────────────────────────────────────
 create_cli_wrapper() {
     step "创建 kopi 命令"
-    
+
     cat > /usr/local/bin/kopi << WRAPPER
 #!/usr/bin/env bash
 # KOPI O Agent CLI wrapper
@@ -208,22 +214,18 @@ cd ${KOPI_HOME}
 exec ${KOPI_HOME}/venv/bin/python ${KOPI_HOME}/kopi "\$@"
 WRAPPER
     chmod +x /usr/local/bin/kopi
-    
+
     ok "kopi 命令已安装到 /usr/local/bin/kopi"
 }
 
 # ── API Key Auto-Provision ─────────────────────────────────────────────
 provision_api_key() {
     step "开通 API 账号"
-    
+
     # Check if key already exists
     if [[ -f "$KOPI_CREDENTIALS_FILE" ]]; then
         existing_key=$(cat "$KOPI_CREDENTIALS_FILE" 2>/dev/null | tr -d '[:space:]')
-        if [[ -n "$existing_key" ]] && [[ "$existing_key" != "kp-"* ]]; then
-            warn "已有非 KOPI 密钥，跳过开通"
-            return
-        fi
-        if [[ -n "$existing_key" ]]; then
+        if [[ -n "$existing_key" ]] && [[ "$existing_key" == kp-* ]]; then
             ok "已有 API Key，跳过开通"
             KOPI_API_KEY="$existing_key"
             return
@@ -235,12 +237,12 @@ provision_api_key() {
         info "使用环境变量提供的 API Key"
     else
         echo -n "  🔑 正在开通账号..."
-        PROVISION_RESP=$(curl -s "$PROVISION_URL" \
+        PROVISION_RESP=$(curl -s -X POST "$PROVISION_URL" \
             -H "Content-Type: application/json" \
             -H "x-provision-token: $PROVISION_TOKEN" \
             --connect-timeout 10 \
             --max-time 30 2>/dev/null || echo "")
-        
+
         KOPI_API_KEY=$(echo "$PROVISION_RESP" | $PYTHON_CMD -c "
 import sys, json
 try:
@@ -249,7 +251,7 @@ try:
 except:
     print('')
 " 2>/dev/null || echo "")
-        
+
         if [[ -z "$KOPI_API_KEY" ]]; then
             echo -e "${RED}失败${NC}"
             echo ""
@@ -270,10 +272,10 @@ except:
 # ── Config Generation ──────────────────────────────────────────────────
 generate_config() {
     step "生成配置文件"
-    
+
     mkdir -p "$KOPI_CONFIG_DIR"
-    
-    # config.yaml
+
+    # config.yaml — api_key inline (custom provider requires it)
     cat > "$KOPI_CONFIG_DIR/config.yaml" << CONFIG
 # ═══════════════════════════════════════════════════════════════════════
 # KOPI O Agent 配置文件
@@ -285,8 +287,8 @@ model:
   default: kopi-o
   provider: custom
   base_url: https://kopi.readinghero.xyz/kp/v1
-  api_key_file: ${KOPI_CREDENTIALS_FILE}
-  context_length: 128000
+  api_key: ${KOPI_API_KEY}
+  context_length: 256000
 
 # 代理配置
 agent:
@@ -321,8 +323,6 @@ CONFIG
     # .env file
     cat > "$KOPI_CONFIG_DIR/.env" << ENV
 # KOPI O Agent Environment Variables
-# API Key 存储在 ${KOPI_CREDENTIALS_FILE}
-
 # 时区
 TZ=Asia/Singapore
 ENV
@@ -332,11 +332,11 @@ ENV
 
 # ── Skills Installation ────────────────────────────────────────────────
 install_skills() {
-    step "预装 70 个实用技能"
-    
+    step "预装实用技能"
+
     SKILLS_DIR="$KOPI_CONFIG_DIR/skills"
     mkdir -p "$SKILLS_DIR"
-    
+
     # Copy curated skills bundle
     BUNDLE_DIR="$KOPI_HOME/skills-bundle"
     if [[ -d "$BUNDLE_DIR" ]]; then
@@ -351,7 +351,7 @@ install_skills() {
             done
         done
     fi
-    
+
     # Also copy all bundled skills as fallback
     if [[ -d "$KOPI_HOME/skills" ]]; then
         info "复制内置技能..."
@@ -362,15 +362,25 @@ install_skills() {
             fi
         done
     fi
-    
+
     SKILL_COUNT=$(find "$SKILLS_DIR" -name "SKILL.md" 2>/dev/null | wc -l)
     ok "已安装 ${SKILL_COUNT} 个技能"
 }
 
 # ── Gateway Configuration ──────────────────────────────────────────────
 configure_gateway() {
+    # Skip in non-interactive mode
+    if [[ "$IS_TTY" != "true" ]]; then
+        info "非交互模式，跳过 Gateway 配置"
+        info "安装完成后运行以下命令配置消息平台:"
+        echo ""
+        echo -e "  ${BOLD}kopi gateway setup${NC}       # 交互式配置 Telegram / WeChat"
+        echo ""
+        return
+    fi
+
     step "配置消息平台"
-    
+
     echo ""
     echo -e "${BOLD}╔══════════════════════════════════════════╗${NC}"
     echo -e "${BOLD}║  请选择消息平台:                          ║${NC}"
@@ -381,9 +391,9 @@ configure_gateway() {
     echo -e "${BOLD}║  ${CYAN}4${NC}${BOLD}) 稍后配置                               ║${NC}"
     echo -e "${BOLD}╚══════════════════════════════════════════╝${NC}"
     echo ""
-    
+
     read -rp "  请选择 [1-4]: " choice
-    
+
     case "$choice" in
         1)
             configure_telegram
@@ -404,7 +414,7 @@ configure_gateway() {
             return
             ;;
     esac
-    
+
     # Install and start gateway service
     install_gateway_service
 }
@@ -419,26 +429,26 @@ configure_telegram() {
     echo "  3. 按提示设置名称"
     echo "  4. 复制获得的 Token"
     echo ""
-    
+
     read -rp "  请输入 Telegram Bot Token: " TG_TOKEN
-    
+
     if [[ -z "$TG_TOKEN" ]]; then
         warn "Token 为空，跳过 Telegram 配置"
         return
     fi
-    
-    # Add to config
+
+    # Append gateway config to config.yaml
     cat >> "$KOPI_CONFIG_DIR/config.yaml" << TGCONFIG
 
 # Telegram 配置
 gateway:
   telegram:
-    bot_token: "${TGTOKEN}"
+    bot_token: "${TG_TOKEN}"
 TGCONFIG
 
     # Also add to .env
     echo "TELEGRAM_BOT_TOKEN=${TG_TOKEN}" >> "$KOPI_CONFIG_DIR/.env"
-    
+
     ok "Telegram 配置完成"
 }
 
@@ -449,36 +459,36 @@ configure_wechat() {
     echo "  WeChat 使用 iLink Bot API"
     echo "  请准备 iLink Bot Token 和 Bot ID"
     echo ""
-    
+
     read -rp "  请输入 iLink Bot Token: " WX_TOKEN
     read -rp "  请输入 iLink Bot ID: " WX_BOT_ID
-    
+
     if [[ -z "$WX_TOKEN" ]] || [[ -z "$WX_BOT_ID" ]]; then
         warn "Token 或 ID 为空，跳过 WeChat 配置"
         return
     fi
-    
-    # Add to config
+
+    # Append gateway config to config.yaml
     cat >> "$KOPI_CONFIG_DIR/config.yaml" << WXCONFIG
 
 # WeChat 配置
 gateway:
   weixin:
-    bot_token: "${WXTOKEN}"
-    ilink_bot_id: "${WXBOTID}"
+    bot_token: "${WX_TOKEN}"
+    ilink_bot_id: "${WX_BOT_ID}"
     status: confirmed
 WXCONFIG
 
     # Also add to .env
     echo "WEIXIN_BOT_TOKEN=${WX_TOKEN}" >> "$KOPI_CONFIG_DIR/.env"
     echo "WEIXIN_BOT_ID=${WX_BOT_ID}" >> "$KOPI_CONFIG_DIR/.env"
-    
+
     ok "WeChat 配置完成"
 }
 
 install_gateway_service() {
     info "安装 Gateway 服务..."
-    
+
     # Create systemd service
     cat > /etc/systemd/system/kopi-gateway.service << SERVICE
 [Unit]
@@ -501,10 +511,10 @@ SERVICE
 
     systemctl daemon-reload
     systemctl enable kopi-gateway 2>/dev/null || true
-    
+
     echo ""
     read -rp "  是否现在启动 Gateway? [Y/n]: " start_gw
-    
+
     if [[ "${start_gw:-Y}" =~ ^[Yy]$ ]]; then
         systemctl start kopi-gateway
         ok "Gateway 已启动"
@@ -552,12 +562,12 @@ show_completion() {
 
 main() {
     banner
-    
+
     # Check if root
     if [[ $EUID -ne 0 ]]; then
         fail "请使用 root 运行: sudo bash 或 sudo -E bash"
     fi
-    
+
     detect_os
     install_deps
     check_python
@@ -566,7 +576,7 @@ main() {
     provision_api_key
     generate_config
     install_skills
-    configure_gateway
+    configure_gateway          # Last step — skipped in non-interactive mode
     show_completion
 }
 
