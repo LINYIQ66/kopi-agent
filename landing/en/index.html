@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KOPI Siew Dai Agent — 新加坡AI代理</title>
-<meta name="description" content="KOPI Siew Dai Agent by Xing Bao Ku PTE LTD. 新加坡传统咖啡 × 人工智能 — 一杯少糖的咖啡，一个能干活的AI">
+<title>KOPI Siew Dai Agent — Singapore AI Agent</title>
+<meta name="description" content="KOPI Siew Dai Agent by Xing Bao Ku PTE LTD. Singapore traditional coffee meets AI — less sugar, full power">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -177,16 +177,16 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="nav-inner">
   <a href="#" class="nav-logo">☕ KOPI <span>Siew Dai</span></a>
   <div class="nav-links" id="navLinks">
-    <a href="#story">文化</a>
-    <a href="#variations">变种</a>
-    <a href="#agent">AI代理</a>
-    <a href="#install">安装</a>
-    <a href="#skills">技能</a>
-    <a href="/docs/">文档</a>
-    <a href="#install" class="nav-cta">一键安装</a>
+    <a href="#story">Story</a>
+    <a href="#variations">Menu</a>
+    <a href="#agent">AI Agent</a>
+    <a href="#install">Install</a>
+    <a href="#skills">Skills</a>
+    <a href="/docs/en/">Docs</a>
+    <a href="#install" class="nav-cta">Install Now</a>
     <div class="lang-switch">
-      <a href="/" class="active">中</a>
-      <a href="/en/">EN</a>
+      <a href="/">中</a>
+      <a href="/en/" class="active">EN</a>
     </div>
   </div>
   <button class="nav-hamburger" id="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">
@@ -204,20 +204,20 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="hero-content">
   <div class="hero-badge">☕ Powered by Singapore Kopi Culture × Xing Bao Ku PTE LTD</div>
   <h1><span class="gradient-text">KOPI <span id="kopi-type"></span><span class="typewriter-cursor"></span></span> Agent</h1>
-  <p class="hero-sub">新加坡传统咖啡 × 人工智能 — 一杯少糖的咖啡，一个能干活的AI</p>
+  <p class="hero-sub">Singapore traditional coffee meets AI — less sugar, full power</p>
   <div class="cmd-group">
     <div class="cmd-item">
-      <div class="cmd-tag">☕ KOPI O — 经典原味</div>
+      <div class="cmd-tag">☕ KOPI O — Classic Original</div>
       <div class="cmd-row">
         <code>curl -fsSL https://kopi.readinghero.xyz/install.sh | bash</code>
-        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install.sh | bash')">复制</button>
+        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install.sh | bash')">Copy</button>
       </div>
     </div>
     <div class="cmd-item">
-      <div class="cmd-tag">🍯 KOPI Siew Dai — 少糖版</div>
+      <div class="cmd-tag">🍯 KOPI Siew Dai — Less Sugar</div>
       <div class="cmd-row">
         <code>curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash</code>
-        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash')">复制</button>
+        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash')">Copy</button>
       </div>
     </div>
   </div>
@@ -227,28 +227,28 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <!-- STORY -->
 <section class="section" id="story">
 <div class="section-inner">
-  <h2 class="section-title reveal">一杯咖啡的<span class="gradient-gold">故事</span></h2>
-  <p class="section-desc reveal reveal-delay-1">从南洋街边摊到AI时代 — 传承不变的，是那杯浓郁的咖啡精神</p>
+  <h2 class="section-title reveal">A Cup of <span class="gradient-gold">Coffee</span></h2>
+  <p class="section-desc reveal reveal-delay-1">From Nanyang street stalls to the AI era — what endures is the spirit of that rich cup of coffee</p>
   <div class="story-grid">
     <div class="story-img reveal">
-      <img src="/assets/kopi-culture.png" alt="新加坡咖啡文化">
+      <img src="/assets/kopi-culture.png" alt="Singapore Coffee Culture">
     </div>
     <div class="story-text reveal reveal-delay-1">
-      <h3>新加坡Kopi的百年传承</h3>
-      <p>Kopi，源自马来语"咖啡"，是新加坡与马来西亚最具代表性的传统饮品。它使用深度烘焙的罗布斯塔咖啡豆，经过独特的棉布袜滤网（布袋冲泡法）反复冲泡，萃取出比普通咖啡更加浓郁、厚实的口感。</p>
-      <p>"Siew Dai"是粤语"少糖"的意思。在新加坡的咖啡文化中，这是追求健康又不想牺牲风味的最佳选择。保留了罗布斯塔咖啡浓郁醇厚的本味，减少了糖分的甜腻，让每一口都回归咖啡的本真。</p>
-      <p>在新加坡的巴刹（Hawker Centre）和传统咖啡店，从清晨到午后，总能看到人们手捧一杯Kopi，配着半生熟蛋和咖椰吐司，享受那份简单而温暖的南洋滋味。</p>
-      <div class="story-highlight">☕ 就像Siew Dai的选择一样 — 我们的AI代理也追求"少糖"理念：最少的配置，最强的功能。</div>
+      <h3>A Century of Singapore Kopi</h3>
+      <p>Kopi, derived from the Malay word for "coffee", is the most iconic traditional beverage of Singapore and Malaysia. Deeply roasted Robusta beans are repeatedly brewed through a unique cotton sock filter, extracting a richer, fuller-bodied taste than regular coffee.</p>
+      <p>"Siew Dai" is Cantonese for "less sugar". In Singapore's coffee culture, this is the best choice for health-conscious drinkers who refuse to sacrifice flavor. It preserves the rich Robusta taste while cutting the cloying sweetness — every sip returns to coffee's true essence.</p>
+      <p>In Singapore's Hawker Centres and traditional kopitiams, from dawn to afternoon, you'll see people holding a cup of Kopi with soft-boiled eggs and kaya toast, savoring that simple yet warm Nanyang flavor.</p>
+      <div class="story-highlight">☕ Just like choosing Siew Dai — our AI agent embraces the "less sugar" philosophy: minimum config, maximum capability.</div>
     </div>
   </div>
   <div class="story-grid" style="margin-top:2rem">
     <div class="story-text reveal" style="order:2">
-      <h3>从巴刹到服务器</h3>
-      <p>新加坡人有句口头禅："Kopi Siew Dai" — 这不仅是一句点单用语，更是一种生活态度：精准、高效、不浪费。我们把这个精神注入了AI代理。</p>
-      <p>就像一位经验丰富的Kopi Uncle用布袋冲出完美的咖啡，KOPI Siew Dai Agent用一行命令为你配置好完整的AI助手。没有多余的步骤，没有复杂的学习曲线，只有纯粹的效率。</p>
+      <h3>From Kopitiam to Server</h3>
+      <p>Singaporeans have a mantra: "Kopi Siew Dai" — not just an order, but a life philosophy: precise, efficient, no waste. We infused this spirit into our AI agent.</p>
+      <p>Just like an experienced Kopi Uncle brews the perfect cup with a cloth bag, KOPI Siew Dai Agent sets up your complete AI assistant with one command. No extra steps, no complex learning curve — pure efficiency.</p>
     </div>
     <div class="story-img reveal reveal-delay-1" style="order:1">
-      <img src="/assets/hawker-kopi.jpg" alt="巴刹咖啡">
+      <img src="/assets/hawker-kopi.jpg" alt="Kopitiam Coffee">
     </div>
   </div>
 </div>
@@ -257,61 +257,61 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <!-- VARIATIONS -->
 <section class="section" id="variations" style="background:var(--gray-50)">
 <div class="section-inner">
-  <h2 class="section-title reveal">你的咖啡，<span class="gradient-blue">你做主</span></h2>
-  <p class="section-desc reveal reveal-delay-1">新加坡有超过10种Kopi点法，总有一款适合你</p>
+  <h2 class="section-title reveal">Your Coffee, <span class="gradient-blue">Your Call</span></h2>
+  <p class="section-desc reveal reveal-delay-1">Singapore has over 10 ways to order Kopi — there's one for everyone</p>
   <div class="variations-hero reveal">
-    <img src="/assets/kopi-variations.png" alt="Kopi变种">
+    <img src="/assets/kopi-variations.png" alt="Kopi Variations">
   </div>
   <div class="variations-grid">
     <div class="variation-card reveal">
       <div class="variation-emoji">☕</div>
       <div class="variation-name">Kopi</div>
-      <div class="variation-desc">黑咖啡 + 炼乳<br>经典款，浓厚顺滑</div>
+      <div class="variation-desc">Black coffee + condensed milk<br>Classic, rich & smooth</div>
     </div>
     <div class="variation-card reveal reveal-delay-1">
       <div class="variation-emoji">🖤</div>
       <div class="variation-name">Kopi O</div>
-      <div class="variation-desc">黑咖啡 + 糖，不加奶<br>纯正咖啡味</div>
+      <div class="variation-desc">Black coffee + sugar, no milk<br>Pure coffee flavor</div>
     </div>
     <div class="variation-card reveal reveal-delay-2">
       <div class="variation-emoji">🥛</div>
       <div class="variation-name">Kopi C</div>
-      <div class="variation-desc">黑咖啡 + 淡奶 + 糖<br>口感更轻盈</div>
+      <div class="variation-desc">Black coffee + evaporated milk + sugar<br>Lighter taste</div>
     </div>
     <div class="variation-card hero-card reveal reveal-delay-3">
       <div class="variation-emoji">⭐</div>
       <div class="variation-name">Kopi Siew Dai</div>
-      <div class="variation-desc">少糖版<br>★★★ 我们的主角！</div>
+      <div class="variation-desc">Less sugar<br>★★★ Our hero!</div>
     </div>
     <div class="variation-card reveal reveal-delay-4">
       <div class="variation-emoji">🫗</div>
       <div class="variation-name">Kopi O Siew Dai</div>
-      <div class="variation-desc">少糖不加奶<br>黑咖啡控首选</div>
+      <div class="variation-desc">Less sugar, no milk<br>Black coffee lovers' pick</div>
     </div>
     <div class="variation-card reveal">
       <div class="variation-emoji">🍃</div>
       <div class="variation-name">Kopi C Siew Dai</div>
-      <div class="variation-desc">少糖少奶<br>健康轻负担</div>
+      <div class="variation-desc">Less sugar, less milk<br>Healthy & light</div>
     </div>
     <div class="variation-card reveal reveal-delay-1">
       <div class="variation-emoji">💪</div>
       <div class="variation-name">Kopi Gau</div>
-      <div class="variation-desc">浓咖啡<br>重口味最爱</div>
+      <div class="variation-desc">Strong coffee<br>Bold flavor lovers' favorite</div>
     </div>
     <div class="variation-card reveal reveal-delay-2">
       <div class="variation-emoji">🌸</div>
       <div class="variation-name">Kopi Po</div>
-      <div class="variation-desc">淡咖啡<br>温柔入门</div>
+      <div class="variation-desc">Light coffee<br>A gentle introduction</div>
     </div>
     <div class="variation-card reveal reveal-delay-3">
       <div class="variation-emoji">🧊</div>
       <div class="variation-name">Kopi Peng</div>
-      <div class="variation-desc">加冰<br>冰爽一夏</div>
+      <div class="variation-desc">Iced<br>Cool & refreshing</div>
     </div>
     <div class="variation-card reveal reveal-delay-4">
       <div class="variation-emoji">🖤</div>
       <div class="variation-name">Kopi Kosong</div>
-      <div class="variation-desc">无糖无奶<br>纯苦回甘</div>
+      <div class="variation-desc">No sugar, no milk<br>Pure bitter finish</div>
     </div>
   </div>
 </div>
@@ -320,23 +320,23 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <!-- WHY SIEW DAI -->
 <section class="section" id="why">
 <div class="section-inner">
-  <h2 class="section-title reveal">为什么选择 <span class="gradient-gold">Siew Dai</span>？</h2>
-  <p class="section-desc reveal reveal-delay-1">少糖不是减配，是精炼</p>
+  <h2 class="section-title reveal">Why Choose <span class="gradient-gold">Siew Dai</span>?</h2>
+  <p class="section-desc reveal reveal-delay-1">Less sugar isn't less — it's refined</p>
   <div class="why-grid">
     <div class="why-card reveal">
       <div class="why-icon">🍯</div>
-      <h3>少糖更健康</h3>
-      <p>Less sugar, same great taste. 就像我们的AI代理 — 用最少的配置实现最高的效率，去掉多余的"糖分"，留下纯粹的生产力。</p>
+      <h3>Less Sugar, Healthier</h3>
+      <p>Less sugar, same great taste. Just like our AI agent — max efficiency with minimum config. Remove the extra "sugar", keep pure productivity.</p>
     </div>
     <div class="why-card reveal reveal-delay-1">
       <div class="why-icon">☕</div>
-      <h3>浓郁不减</h3>
-      <p>Full-bodied robusta flavor preserved. KOPI Siew Dai Agent在轻量化的包装里浓缩了完整的AI能力，浓郁不减。</p>
+      <h3>Full Flavor Preserved</h3>
+      <p>Full-bodied robusta flavor preserved. KOPI Siew Dai Agent packs complete AI into a lightweight package — full flavor preserved.</p>
     </div>
     <div class="why-card reveal reveal-delay-2">
       <div class="why-icon">🇸🇬</div>
-      <h3>新加坡精神</h3>
-      <p>The kiasu spirit of getting the best value. 一行命令，完整AI代理。不多不少，刚刚好 — 这就是kiasu。</p>
+      <h3>Singapore Spirit</h3>
+      <p>The kiasu spirit of getting the best value. One command, complete AI agent. Not too much, not too little — just nice. That's kiasu.</p>
     </div>
   </div>
 </div>
@@ -348,21 +348,21 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <div class="ai-overlay"></div>
 <div class="ai-content reveal">
   <h2>KOPI Siew Dai Agent</h2>
-  <p class="ai-sub">像一杯好咖啡一样 — 浓缩精华，一键到位</p>
+  <p class="ai-sub">Like a great cup of coffee — concentrated essence, one click away</p>
   <p class="ai-company">by Xing Bao Ku PTE LTD · Singapore 🇸🇬</p>
   <div class="cmd-group">
     <div class="cmd-item">
       <div class="cmd-tag">☕ KOPI O</div>
       <div class="cmd-row">
         <code>curl -fsSL https://kopi.readinghero.xyz/install.sh | bash</code>
-        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install.sh | bash')">复制</button>
+        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install.sh | bash')">Copy</button>
       </div>
     </div>
     <div class="cmd-item">
       <div class="cmd-tag">🍯 KOPI Siew Dai</div>
       <div class="cmd-row">
         <code>curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash</code>
-        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash')">复制</button>
+        <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash')">Copy</button>
       </div>
     </div>
   </div>
@@ -372,38 +372,38 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <!-- FEATURES -->
 <section class="section" id="features">
 <div class="section-inner">
-  <h2 class="section-title reveal"><span class="gradient-blue">开箱即用</span></h2>
-  <p class="section-desc reveal reveal-delay-1">一行命令，获得一个全功能AI助手</p>
+  <h2 class="section-title reveal"><span class="gradient-blue">Out of the Box</span></h2>
+  <p class="section-desc reveal reveal-delay-1">One command, get a full-featured AI assistant</p>
   <div class="features-grid">
     <div class="feature-card reveal">
       <div class="feature-icon">🔧</div>
-      <h3>107+ 实用技能</h3>
-      <p>预装 Telegram、微信、代码、部署、研究、自动化技能</p>
+      <h3>107+ Skills</h3>
+      <p>Pre-installed: Telegram, WeChat, code, deploy, research, automation</p>
     </div>
     <div class="feature-card reveal reveal-delay-1">
       <div class="feature-icon">🤖</div>
-      <h3>多平台支持</h3>
-      <p>Telegram + 微信 Gateway，配置即用</p>
+      <h3>Multi-Platform</h3>
+      <p>Telegram + WeChat Gateway, configure and go</p>
     </div>
     <div class="feature-card reveal reveal-delay-2">
       <div class="feature-icon">☕</div>
-      <h3>KOPI 大模型</h3>
-      <p>自带模型代理，无需自己申请 API Key</p>
+      <h3>KOPI LLM</h3>
+      <p>Built-in model proxy, no need to apply for API keys</p>
     </div>
     <div class="feature-card reveal reveal-delay-1">
       <div class="feature-icon">🚀</div>
-      <h3>一键部署</h3>
-      <p>curl 一行命令，从零到可用只需 3 分钟</p>
+      <h3>One-Click Deploy</h3>
+      <p>One curl command, zero to ready in 3 minutes</p>
     </div>
     <div class="feature-card reveal reveal-delay-2">
       <div class="feature-icon">🔒</div>
-      <h3>安全隔离</h3>
-      <p>API Key 系统级存储，用户不可见</p>
+      <h3>Secure Isolation</h3>
+      <p>API key stored at system level, invisible to users</p>
     </div>
     <div class="feature-card reveal reveal-delay-3">
       <div class="feature-icon">📦</div>
-      <h3>自动更新</h3>
-      <p>技能自动同步，持续进化</p>
+      <h3>Auto Update</h3>
+      <p>Skills auto-sync, continuously evolving</p>
     </div>
   </div>
 </div>
@@ -412,47 +412,47 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;backg
 <!-- INSTALL -->
 <section class="section" id="install" style="background:var(--gray-50)">
 <div class="section-inner">
-  <h2 class="section-title reveal"><span class="gradient-gold">三步开始</span></h2>
-  <p class="section-desc reveal reveal-delay-1">从零到一个完整的AI代理，只需三步</p>
+  <h2 class="section-title reveal"><span class="gradient-gold">3 Steps to Start</span></h2>
+  <p class="section-desc reveal reveal-delay-1">From zero to a complete AI agent in just 3 steps</p>
   <div class="install-steps">
     <div class="step reveal">
       <div class="step-num">1</div>
-      <h3>买一台 VPS</h3>
-      <p>Vultr, DigitalOcean, AWS, 阿里云 — 任选一台即可</p>
+      <h3>Get a VPS</h3>
+      <p>Vultr, DigitalOcean, AWS — pick any</p>
     </div>
     <div class="step reveal reveal-delay-1">
       <div class="step-num">2</div>
-      <h3>SSH 粘贴命令</h3>
-      <p>SSH 登录后，粘贴安装命令，等待3分钟</p>
+      <h3>Paste the Command</h3>
+      <p>SSH in, paste the install command, wait 3 minutes</p>
     </div>
     <div class="step reveal reveal-delay-2">
       <div class="step-num">3</div>
-      <h3>浏览器配置</h3>
-      <p>安装完成后，浏览器打开 Web 向导配置 Telegram / 微信</p>
+      <h3>Browser Setup</h3>
+      <p>After install, open the Web wizard to configure Telegram / WeChat</p>
     </div>
   </div>
 
   <div class="code-block reveal">
     <code>curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash</code>
-    <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash')">复制</button>
+    <button class="cmd-copy" onclick="copyCmd(this,'curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash')">Copy</button>
   </div>
 
   <div class="config-grid">
     <div class="config-box reveal">
-      <h4>🌐 Web 向导（推荐）</h4>
-      <pre># 安装时选 "5) Web 配置"
-# 然后浏览器打开:
-http://你的VPS_IP:8899
+      <h4>🌐 Web Wizard (Recommended)</h4>
+      <pre># During install, pick "5) Web Config"
+# Then open in browser:
+http://YOUR_VPS_IP:8899
 
-# 图形界面填写 Token，一键完成</pre>
+# Fill in Token via GUI, done</pre>
     </div>
     <div class="config-box reveal reveal-delay-1">
-      <h4>⌨️ 命令行配置</h4>
-      <pre># 编辑配置文件
+      <h4>⌨️ CLI Config</h4>
+      <pre># Edit config file
 vim ~/.kopi/config.yaml
 
-# 添加配置
-  # 扫码登录即可</pre>
+# Add config
+  # Scan QR to login</pre>
     </div>
   </div>
 </div>
@@ -461,18 +461,18 @@ vim ~/.kopi/config.yaml
 <!-- SKILLS -->
 <section class="section" id="skills">
 <div class="section-inner">
-  <h2 class="section-title reveal"><span class="gradient-blue">107 个技能</span>，覆盖日常</h2>
-  <p class="section-desc reveal reveal-delay-1">从通讯到开发，从数据到创意，一个代理搞定一切</p>
+  <h2 class="section-title reveal"><span class="gradient-blue">107 Skills</span>, Covering Everything</h2>
+  <p class="section-desc reveal reveal-delay-1">From messaging to dev, data to creative — one agent does it all</p>
   <div class="skills-grid">
-    <div class="skill-card reveal"><div class="skill-icon">💬</div><h4>通讯</h4><p>Telegram, WhatsApp, WeChat, Discord, Signal</p></div>
-    <div class="skill-card reveal reveal-delay-1"><div class="skill-icon">🌐</div><h4>搜索</h4><p>Web Search, YouTube, ArXiv, Polymarket</p></div>
-    <div class="skill-card reveal reveal-delay-2"><div class="skill-icon">💻</div><h4>开发</h4><p>GitHub, Python, Node.js, Docker, Debugging</p></div>
-    <div class="skill-card reveal reveal-delay-3"><div class="skill-icon">📊</div><h4>数据</h4><p>Jupyter, Pandas, Visualization, Web Scraping</p></div>
-    <div class="skill-card reveal reveal-delay-4"><div class="skill-icon">🎨</div><h4>创意</h4><p>ASCII Art, Infographic, Diagram, Pixel Art</p></div>
-    <div class="skill-card reveal"><div class="skill-icon">📝</div><h4>生产力</h4><p>Obsidian, Notion, Google Workspace, PDF</p></div>
+    <div class="skill-card reveal"><div class="skill-icon">💬</div><h4>Messaging</h4><p>Telegram, WhatsApp, WeChat, Discord, Signal</p></div>
+    <div class="skill-card reveal reveal-delay-1"><div class="skill-icon">🌐</div><h4>Search</h4><p>Web Search, YouTube, ArXiv, Polymarket</p></div>
+    <div class="skill-card reveal reveal-delay-2"><div class="skill-icon">💻</div><h4>Dev</h4><p>GitHub, Python, Node.js, Docker, Debugging</p></div>
+    <div class="skill-card reveal reveal-delay-3"><div class="skill-icon">📊</div><h4>Data</h4><p>Jupyter, Pandas, Visualization, Web Scraping</p></div>
+    <div class="skill-card reveal reveal-delay-4"><div class="skill-icon">🎨</div><h4>Creative</h4><p>ASCII Art, Infographic, Diagram, Pixel Art</p></div>
+    <div class="skill-card reveal"><div class="skill-icon">📝</div><h4>Productivity</h4><p>Obsidian, Notion, Google Workspace, PDF</p></div>
     <div class="skill-card reveal reveal-delay-1"><div class="skill-icon">🤖</div><h4>AI/ML</h4><p>vLLM, LoRA Fine-tuning, HuggingFace, W&B</p></div>
-    <div class="skill-card reveal reveal-delay-2"><div class="skill-icon">🏠</div><h4>智能家居</h4><p>Philips Hue, Home Assistant</p></div>
-    <div class="skill-card reveal reveal-delay-3"><div class="skill-icon">🎵</div><h4>媒体</h4><p>Spotify, YouTube, GIF, Music Generation</p></div>
+    <div class="skill-card reveal reveal-delay-2"><div class="skill-icon">🏠</div><h4>Smart Home</h4><p>Philips Hue, Home Assistant</p></div>
+    <div class="skill-card reveal reveal-delay-3"><div class="skill-icon">🎵</div><h4>Media</h4><p>Spotify, YouTube, GIF, Music Generation</p></div>
     <div class="skill-card reveal reveal-delay-4"><div class="skill-icon">🔧</div><h4>DevOps</h4><p>API Platform, Webhook, Subdomain Deploy</p></div>
   </div>
 </div>
@@ -483,10 +483,10 @@ vim ~/.kopi/config.yaml
 <div class="footer-inner">
   <h3>☕ KOPI Siew Dai Agent</h3>
   <p style="margin-bottom:0.25rem">by Xing Bao Ku PTE LTD</p>
-  <p>新加坡 · Singapore 🇸🇬</p>
+  <p>Singapore · Singapore 🇸🇬</p>
   <div class="footer-divider"></div>
   <p><a href="https://github.com/LINYIQ66/kopi-siew-dai" target="_blank">GitHub →</a></p>
-  <p class="footer-tagline" style="margin-top:1rem">像少糖咖啡一样 — 简单、纯粹、有效</p>
+  <p class="footer-tagline" style="margin-top:1rem">Like less sugar coffee — simple, pure, effective</p>
   <p class="footer-copy">© 2026 Xing Bao Ku PTE LTD. All rights reserved.</p>
 </div>
 </footer>
@@ -495,23 +495,23 @@ vim ~/.kopi/config.yaml
 // Copy button
 function copyCmd(btn, text) {
   navigator.clipboard.writeText(text).then(() => {
-    btn.textContent = '已复制 ✓';
+    btn.textContent = 'Copied ✓';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
 // Typewriter effect for hero title — cycles through Singapore KOPI terms
 (function() {
   const terms = [
-    { text: 'O',           desc: '黑咖啡 — 无糖无奶' },
-    { text: 'O Kosong',    desc: '黑咖啡无糖 — Kosong = 零' },
-    { text: 'Siew Dai',    desc: '少糖 — Siew Dai = 少甜' },
-    { text: 'Gau',         desc: '浓咖啡 — Gau = 厚' },
-    { text: 'Gah Dai',     desc: '加甜 — Gah Dai = 加甜' },
-    { text: 'Peng',        desc: '冰咖啡 — Peng = 冰' },
-    { text: 'C',           desc: '加淡奶 — C = Carnation' },
-    { text: 'Po',          desc: '淡咖啡 — Po = 薄' },
+    { text: 'O',           desc: 'Black coffee — no sugar, no milk' },
+    { text: 'O Kosong',    desc: 'Black, no sugar — Kosong = zero' },
+    { text: 'Siew Dai',    desc: 'Less sugar — Siew Dai' },
+    { text: 'Gau',         desc: 'Strong coffee — Gau = thick' },
+    { text: 'Gah Dai',     desc: 'Extra sweet — Gah Dai' },
+    { text: 'Peng',        desc: 'Iced coffee — Peng = ice' },
+    { text: 'C',           desc: 'Evaporated milk — C = Carnation' },
+    { text: 'Po',          desc: 'Light coffee — Po = thin' },
   ];
   const el = document.getElementById('kopi-type');
   if (!el) return;

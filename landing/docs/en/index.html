@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOPI Agent Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563eb;--blue-dark:#1d4ed8;--blue-light:#3b82f6;--gold:#f59e0b;--gold-light:#fbbf24;--gold-dark:#d97706;--bg:#ffffff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--gray-900:#0f172a}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--gray-800);background:var(--bg);line-height:1.7}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:0.75rem 2rem;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--gray-200)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:1.25rem;font-weight:800;color:var(--gray-900);text-decoration:none;display:flex;align-items:center;gap:0.5rem}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.75rem;align-items:center}
+.nav-links a{color:var(--gray-600);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-links a.active{color:var(--blue);font-weight:600}
+.lang-switch{display:flex;gap:3px;background:var(--gray-100);border-radius:8px;padding:3px}
+.lang-switch a{padding:5px 14px;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;color:var(--gray-500);transition:all .2s}
+.lang-switch a.active{background:var(--blue);color:#fff}
+.lang-switch a:hover:not(.active){color:var(--gray-800)}
+
+/* LAYOUT */
+.docs{max-width:1100px;margin:0 auto;padding:6rem 1.5rem 4rem;display:flex;gap:3rem}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:6rem;align-self:start;max-height:calc(100vh - 8rem);overflow-y:auto}
+.sidebar a{display:block;padding:0.4rem 1rem;color:var(--gray-500);text-decoration:none;font-size:0.85rem;border-left:2px solid transparent;transition:all .2s;margin-bottom:0.15rem}
+.sidebar a:hover,.sidebar a.active{color:var(--blue);border-left-color:var(--blue);background:var(--gray-50)}
+.content{flex:1;min-width:0}
+@media(max-width:768px){.docs{flex-direction:column}.sidebar{width:100%;position:static;max-height:none;display:flex;flex-wrap:wrap;gap:0.25rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-200)}.sidebar a{border-left:none;border-bottom:2px solid transparent;padding:0.3rem 0.75rem;font-size:0.8rem}}
+
+/* TYPOGRAPHY */
+h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem}
+h2{font-size:1.5rem;font-weight:700;margin:2.5rem 0 1rem;padding-top:1.5rem;border-top:1px solid var(--gray-200);letter-spacing:-0.01em}
+h2:first-of-type{border-top:none;padding-top:0}
+h3{font-size:1.1rem;font-weight:600;margin:1.5rem 0 0.75rem;color:var(--gray-700)}
+p{margin-bottom:1rem;color:var(--gray-600)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.subtitle{color:var(--gray-500);font-size:1.05rem;margin-bottom:2rem}
+
+/* CODE */
+code{font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--gray-100);padding:0.15em 0.4em;border-radius:4px;color:var(--blue-dark)}
+pre{background:var(--gray-900);color:#e2e8f0;padding:1.25rem 1.5rem;border-radius:12px;overflow-x:auto;margin:1rem 0;font-size:0.85rem;line-height:1.7}
+pre code{background:none;color:inherit;padding:0}
+.code-header{display:flex;align-items:center;justify-content:space-between;background:var(--gray-800);color:var(--gray-400);padding:0.5rem 1rem;border-radius:12px 12px 0 0;font-size:0.75rem;font-weight:600;margin-bottom:-0.5rem}
+.code-header+pre{border-radius:0 0 12px 12px;margin-top:0}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem}
+th{text-align:left;padding:0.6rem 1rem;background:var(--gray-50);font-weight:600;color:var(--gray-700);border-bottom:2px solid var(--gray-200)}
+td{padding:0.6rem 1rem;border-bottom:1px solid var(--gray-100);color:var(--gray-600)}
+tr:hover td{background:var(--gray-50)}
+
+/* CALLOUT */
+.callout{padding:1rem 1.25rem;border-radius:10px;margin:1rem 0;font-size:0.9rem}
+.callout-info{background:#eff6ff;border-left:4px solid var(--blue)}
+.callout-warn{background:#fffbeb;border-left:4px solid var(--gold)}
+.callout-success{background:#f0fdf4;border-left:4px solid #22c55e}
+.callout strong{display:block;margin-bottom:0.25rem;color:var(--gray-800)}
+
+/* BADGE */
+.badge{display:inline-block;padding:0.2rem 0.6rem;border-radius:6px;font-size:0.7rem;font-weight:600;vertical-align:middle}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-gold{background:#fef3c7;color:#b45309}
+.badge-green{background:#dcfce7;color:#15803d}
+
+/* LIST */
+ul,ol{margin:0.5rem 0 1rem 1.5rem;color:var(--gray-600)}
+li{margin-bottom:0.35rem}
+li code{font-size:0.8em}
+
+/* FOOTER */
+.footer{text-align:center;padding:3rem 1.5rem;color:var(--gray-500);font-size:0.85rem;border-top:1px solid var(--gray-200);margin-top:4rem}
+.footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+  <a href="/" class="nav-logo">☕ KOPI <span>Agent</span></a>
+  <div class="nav-links">
+    <a href="/en/">Home</a>
+    <a href="/docs/" class="active">Docs</a>
+    <a href="https://github.com/LINYIQ66/kopi-agent" target="_blank">GitHub</a>
+    <div class="lang-switch">
+      <a href="/docs/">中</a>
+      <a href="/docs/en/" class="active">EN</a>
+    </div>
+  </div>
+</div>
+</nav>
+
+<!-- DOCS -->
+<div class="docs">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="#intro">Introduction</a>
+  <a href="#variants">Product Line</a>
+  <a href="#install">Installation</a>
+  <a href="#quickstart">Quick Start</a>
+  <a href="#commands">Commands</a>
+  <a href="#gateway">Gateway</a>
+  <a href="#models">Models</a>
+  <a href="#skills">Skills</a>
+  <a href="#config">Configuration</a>
+  <a href="#troubleshoot">Troubleshooting</a>
+</aside>
+
+<!-- CONTENT -->
+<main class="content">
+
+<h1>☕ KOPI Agent Documentation</h1>
+<p class="subtitle">Singapore Coffee × AI — One command to set up your AI assistant</p>
+
+<h2 id="intro">Introduction</h2>
+<p>KOPI Agent is a deeply customized AI agent platform based on Hermes Agent, built for Singapore and Southeast Asian users. As simple as ordering coffee at a kopitiam — pick your flavor, one command to install.</p>
+
+<div class="callout callout-info">
+<strong>☕ Why KOPI?</strong>
+In Singapore, KOPI isn't just coffee — it's a culture. From KOPI O (black coffee) to KOPI Siew Dai (less sugar), each order represents a different strength and sweetness. KOPI Agent works the same way: pick the version that suits you.
+</div>
+
+<h2 id="variants">Product Line</h2>
+
+<table>
+<tr><th>Version</th><th>Model</th><th>Description</th></tr>
+<tr><td><strong>KOPI O</strong> <span class="badge badge-gold">Classic</span></td><td>MiMo v2.5 Pro</td><td>Classic original, full-featured</td></tr>
+<tr><td><strong>KOPI Siew Dai</strong> <span class="badge badge-blue">Less Sugar</span></td><td>MiMo v2.5 Pro</td><td>Lightweight version, same model, cleaner config</td></tr>
+<tr><td><strong>KOPI O Flash</strong></td><td>MiMo v2 Flash</td><td>Fast version, quicker responses</td></tr>
+<tr><td><strong>KOPI Gau</strong> <span class="badge badge-green">Strong</span></td><td>DeepSeek v4 Flash</td><td>Strong version, enhanced reasoning</td></tr>
+</table>
+
+<h2 id="install">Installation</h2>
+
+<h3>KOPI O (Classic)</h3>
+<pre><code>curl -fsSL https://kopi.readinghero.xyz/install.sh | bash</code></pre>
+
+<h3>KOPI Siew Dai (Less Sugar)</h3>
+<pre><code>curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash</code></pre>
+
+<div class="callout callout-info">
+<strong>💡 Installation Process</strong>
+The script automatically handles: OS detection → dependency install → Python check → clone code → create venv → install deps → provision API Key → generate config → pre-install 100+ skills. The last step configures messaging platforms (Telegram / WeChat).
+</div>
+
+<h3>Provide API Key Manually</h3>
+<pre><code>curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash</code></pre>
+
+<h3>System Requirements</h3>
+<ul>
+<li>Operating System: Ubuntu 20.04+, Debian 11+, CentOS 8+, Fedora, Arch</li>
+<li>Architecture: x86_64 / arm64</li>
+<li>Python: 3.11+ (auto-installed by script)</li>
+<li>Memory: 1GB+ recommended</li>
+<li>Disk: 2GB+ free space</li>
+<li>Network: Requires access to kopi.readinghero.xyz</li>
+</ul>
+
+<h2 id="quickstart">Quick Start</h2>
+
+<h3>Interactive Chat</h3>
+<pre><code>kopi</code></pre>
+<p>Chat with AI directly in your terminal. Supports tool calls, code execution, file operations, and more.</p>
+
+<h3>One-Shot Query</h3>
+<pre><code>kopi "Write a Python script to batch rename files"</code></pre>
+
+<h3>Switch Models</h3>
+<pre><code>/model kopi-gau       # Switch to DeepSeek strong version
+/model kopi-o-flash   # Switch to fast version
+/model kopi-o         # Switch back to classic</code></pre>
+
+<h2 id="commands">Common Commands</h2>
+
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>kopi</code></td><td>Start interactive chat</td></tr>
+<tr><td><code>kopi gateway start</code></td><td>Start messaging gateway (Telegram/WeChat)</td></tr>
+<tr><td><code>kopi gateway stop</code></td><td>Stop messaging gateway</td></tr>
+<tr><td><code>kopi doctor</code></td><td>Diagnose issues</td></tr>
+<tr><td><code>kopi setup</code></td><td>Full setup wizard</td></tr>
+<tr><td><code>kopi logs</code></td><td>View logs</td></tr>
+<tr><td><code>kopi status</code></td><td>View status</td></tr>
+</table>
+
+<h3>In-Chat Commands</h3>
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td><code>/model &lt;name&gt;</code></td><td>Switch model</td></tr>
+<tr><td><code>/new</code></td><td>New conversation</td></tr>
+<tr><td><code>/skills</code></td><td>View installed skills</td></tr>
+<tr><td><code>/memory</code></td><td>View memory</td></tr>
+<tr><td><code>/help</code></td><td>Help</td></tr>
+</table>
+
+<h2 id="gateway">Gateway (Messaging Gateway)</h2>
+<p>KOPI Agent can interact with you via Telegram and WeChat — use AI like chatting with a friend.</p>
+
+<h3>Telegram Setup</h3>
+<ol>
+<li>Search for <code>@BotFather</code></li>
+<li>Send <code>/newbot</code> to create a Bot</li>
+<li>Copy the Token you receive</li>
+<li>Run <code>kopi gateway setup</code> and enter the Token</li>
+</ol>
+
+<h3>systemd Service</h3>
+<pre><code>systemctl start kopi-gateway     # Start
+systemctl stop kopi-gateway      # Stop
+systemctl status kopi-gateway    # Status
+journalctl -u kopi-gateway -f    # Logs</code></pre>
+
+<h2 id="models">Models</h2>
+<p>All models are proxied through KOPI Proxy — no need to bring your own API Key.</p>
+
+<table>
+<tr><th>Client Model Name</th><th>Upstream Model</th><th>Description</th></tr>
+<tr><td><code>kopi-o</code></td><td>MiMo v2.5 Pro</td><td>Default, strongest overall</td></tr>
+<tr><td><code>kopi-o-flash</code></td><td>MiMo v2 Flash</td><td>Fast response</td></tr>
+<tr><td><code>kopi-siew-dai</code></td><td>MiMo v2.5 Pro</td><td>Siew Dai default</td></tr>
+<tr><td><code>kopi-siew-dai-flash</code></td><td>MiMo v2 Flash</td><td>Siew Dai fast version</td></tr>
+<tr><td><code>kopi-gau</code></td><td>DeepSeek v4 Flash</td><td>Strong reasoning</td></tr>
+</table>
+
+<h2 id="skills">Skills</h2>
+<p>Automatically installs 100+ skills during setup, covering:</p>
+
+<table>
+<tr><th>Category</th><th>Skills</th><th>Examples</th></tr>
+<tr><td>Core Dev</td><td>15</td><td>plan, debugging, TDD, code-review</td></tr>
+<tr><td>GitHub</td><td>6</td><td>PR workflow, issues, repo management</td></tr>
+<tr><td>Research</td><td>6</td><td>arXiv, blog monitoring, Jupyter</td></tr>
+<tr><td>Productivity</td><td>8</td><td>Google Workspace, Notion, PowerPoint</td></tr>
+<tr><td>Media</td><td>5</td><td>YouTube, Twitter, Spotify</td></tr>
+<tr><td>Creative</td><td>8</td><td>Architecture diagrams, Comics, Infographics, Pixel art</td></tr>
+<tr><td>DevOps</td><td>5</td><td>Docker, Kanban, CLI</td></tr>
+<tr><td>Other</td><td>50+</td><td>Email, Gaming, Smart home, Red team testing</td></tr>
+</table>
+
+<h2 id="config">Configuration</h2>
+<p>Config file is located at <code>~/.kopi/config.yaml</code>: </p>
+
+<pre><code># Model Configuration
+model:
+  default: kopi-o              # Default model
+  provider: custom
+  base_url: https://kopi.readinghero.xyz/kp/v1
+  api_key: kp-xxxxxxxx         # Auto-provisioned during install
+  context_length: 256000
+
+# Agent Configuration
+agent:
+  max_turns: 90
+
+# Terminal Configuration
+terminal:
+  timeout: 180
+
+# Display Configuration
+display:
+  skin: default
+  show_cost: true
+
+# Memory Configuration
+memory:
+  memory_enabled: true
+  user_profile_enabled: true</code></pre>
+
+<h2 id="troubleshoot">Troubleshooting</h2>
+
+<h3>Installation Failed</h3>
+<div class="callout callout-warn">
+<strong>⚠️ Common Issues</strong>
+<ul>
+<li><code>dpkg</code> interrupted → Run <code>sudo dpkg --configure -a</code></li>
+<li>Python version too old → Script will auto-install 3.11+</li>
+<li>Network issues → Ensure you can reach kopi.readinghero.xyz</li>
+</ul>
+</div>
+
+<h3>API Issues</h3>
+<div class="callout callout-warn">
+<strong>⚠️ 401 Invalid API Key</strong>
+<ul>
+<li>Check <code>~/.kopi/config.yaml</code> <code>api_key</code> in config is correct</li>
+<li>Confirm <code>base_url</code> is <code>https://kopi.readinghero.xyz/kp/v1</code></li>
+<li>Run <code>kopi doctor</code> to diagnose</li>
+</ul>
+</div>
+
+<h3>Gateway Issues</h3>
+<div class="callout callout-warn">
+<strong>⚠️ Telegram Bot Not Responding</strong>
+<ul>
+<li>Check <code>systemctl status kopi-gateway</code></li>
+<li>Check logs <code>journalctl -u kopi-gateway -f</code></li>
+<li>Confirm Bot Token is correct</li>
+</ul>
+</div>
+
+<div class="callout callout-success">
+<strong>✅ Get Help</strong>
+GitHub Issues: <a href="https://github.com/LINYIQ66/kopi-agent" target="_blank">github.com/LINYIQ66/kopi-agent</a>
+</div>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+<p>☕ KOPI Agent by <a href="/">Xing Bao Ku PTE LTD</a> · Singapore 🇸🇬</p>
+<p style="margin-top:0.5rem"><a href="https://github.com/LINYIQ66/kopi-agent" target="_blank">GitHub</a></p>
+</footer>
+
+<script>
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('h2[id]');
+const links = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  links.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
+});
+</script>
+</body>
+</html>

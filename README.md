@@ -1,146 +1,171 @@
 <p align="center">
-  <img src="assets/banner.png" alt="KOPI O Agent" width="100%">
+  <img src="website/assets/banner.png" alt="KOPI Siew Dai Agent" width="100%">
 </p>
 
-# KOPI O Agent ☤
+# ☕ KOPI Siew Dai Agent
 
 <p align="center">
-  <a href="https://kopi.happysocial.xyz/docs/"><img src="https://img.shields.io/badge/Docs-kopi.happysocial.xyz-FFD700?style=for-the-badge" alt="Documentation"></a>
-  <a href="https://github.com/LINYIQ66/kopi-agent/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
-  <a href="https://happysocial.xyz"><img src="https://img.shields.io/badge/Built%20by-Xing%20Bao%20Ku%20PTE%20LTD-blueviolet?style=for-the-badge" alt="Built by Xing Bao Ku PTE LTD"></a>
+  <a href="https://kopi.readinghero.xyz/docs/en/"><img src="https://img.shields.io/badge/Docs-kopi.readinghero.xyz-FFD700?style=for-the-badge" alt="Documentation"></a>
+  <a href="https://github.com/LINYIQ66/kopi-siew-dai/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
+  <a href="https://kopi.readinghero.xyz"><img src="https://img.shields.io/badge/Built%20by-Xing%20Bao%20Ku%20PTE%20LTD-blueviolet?style=for-the-badge" alt="Built by Xing Bao Ku PTE LTD"></a>
 </p>
 
-**KOPI O Agent** — 由 [Xing Bao Ku PTE LTD](https://happysocial.xyz) 打造的自进化 AI 智能体。
+**KOPI Siew Dai Agent** — an AI agent for Singapore SMEs by [Xing Bao Ku PTE LTD](https://kopi.readinghero.xyz). Less sugar, full power.
 
-基于开源 Hermes Agent 深度定制，专为中文用户和企业场景优化。一键安装，傻瓜式部署，开箱即用。
+Built on [Hermes Agent](https://github.com/nousresearch/hermes-agent), deeply customized for Singapore and Southeast Asia. One command install, zero configuration, 107+ skills pre-loaded.
 
-## ✨ 核心特性
-
-- 🚀 **一键安装** — `curl -fsSL https://kopi.happysocial.xyz/install.sh | bash`，全程自动化
-- 🔑 **API Key 自动开通** — 安装时自动获取，用户无需手动配置
-- 📱 **消息平台就绪** — Telegram / WeChat Gateway 最后一步交互配置
-- 🧠 **65 个预装技能** — 涵盖开发、运维、研究、创意等场景
-- 💬 **中文优先** — 默认中文交互，支持中英双语
-- 🔄 **自进化学习** — 从经验中学习，自动创建和改进技能
-- ⏰ **定时任务** — 内置 Cron 调度，支持多平台投递
-- 🤖 **多代理协作** — 子代理并行执行，任务委派
-
-## 🚀 快速安装
-
-### 一键安装（推荐）
-
-```bash
-curl -fsSL https://kopi.happysocial.xyz/install.sh | bash
-```
-
-安装过程全自动：
-1. ✅ 系统环境检测 & 依赖安装
-2. ✅ KOPI O Agent 安装
-3. ✅ 自动开通 API 账号 & 获取密钥
-4. ✅ 预装 65 个实用技能
-5. ✅ 交互式配置 Telegram / WeChat Gateway
-
-### 手动指定 API Key
-
-```bash
-curl -fsSL https://kopi.happysocial.xyz/install.sh | KOPI_API_KEY=kp-xxx bash
-```
-
-## 📖 使用指南
-
-### CLI 命令
-
-```bash
-kopi              # 交互式聊天
-kopi model        # 选择大模型
-kopi tools        # 配置工具
-kopi config set   # 设置配置项
-kopi gateway      # 启动消息网关
-kopi setup        # 完整设置向导
-kopi update       # 更新到最新版
-kopi doctor       # 诊断问题
-```
-
-### 消息平台
-
-安装完成后，通过 Telegram 或 WeChat 与 KOPI O Agent 对话：
-
-```
-/new              # 新对话
-/model            # 切换模型
-/skills           # 浏览技能
-/cron             # 管理定时任务
-/help             # 查看所有命令
-```
-
-## 🛠 预装技能（65 个）
-
-### 核心工具 (15)
-计划、调试、TDD、GitHub 工作流、笔记、邮件等
-
-### 开发工具 (15)
-Claude Code、Codex、代码审查、MCP 集成等
-
-### 数据研究 (10)
-arXiv、Polymarket、Jupyter、Google Workspace 等
-
-### 部署运维 (10)
-子域名部署、API 平台、Docker、双语网站等
-
-### 创意内容 (10)
-漫画、信息图、Excalidraw、PPT、音乐等
-
-### 其他实用 (5)
-自我改进、知识图谱、OPC 方法论等
-
-## 🔧 配置
-
-### 模型配置
-
-```yaml
-# ~/.kopi/config.yaml
-model:
-  default: kopi-o
-  provider: custom
-  base_url: https://proxy.happysocial.xyz/v1
-  api_key_file: /etc/kopi-agent/credentials
-```
-
-### Gateway 配置
-
-```yaml
-# Telegram
-gateway:
-  telegram:
-    bot_token: "YOUR_BOT_TOKEN"
-
-# WeChat
-gateway:
-  weixin:
-    bot_token: "YOUR_BOT_TOKEN"
-    ilink_bot_id: "YOUR_BOT_ID"
-```
-
-## 📚 文档
-
-- [快速入门](https://kopi.happysocial.xyz/docs/getting-started/quickstart)
-- [CLI 指南](https://kopi.happysocial.xyz/docs/user-guide/cli)
-- [配置参考](https://kopi.happysocial.xyz/docs/user-guide/configuration)
-- [消息网关](https://kopi.happysocial.xyz/docs/user-guide/messaging)
-- [技能系统](https://kopi.happysocial.xyz/docs/user-guide/features/skills)
-- [定时任务](https://kopi.happysocial.xyz/docs/user-guide/features/cron)
-
-## 🤝 社区
-
-- 🐛 [问题反馈](https://github.com/LINYIQ66/kopi-agent/issues)
-- 📚 [技能中心](https://agentskills.io)
-
-## 📄 许可证
-
-MIT — 详见 [LICENSE](LICENSE)
+> **"Siew Dai"** (少糖) is Hokkien for "less sugar" — the Singapore way of ordering coffee with less sweetness. Our AI agent follows the same philosophy: remove the complexity, keep the capability.
 
 ---
 
-**Built with ❤️ by [Xing Bao Ku PTE LTD](https://happysocial.xyz)**
+## 🚀 Quick Start
 
-*Based on [Hermes Agent](https://github.com/NousResearch/hermes-agent) by [Nous Research](https://nousresearch.com)*
+```bash
+curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash
+```
+
+That's it. In 3 minutes you have a fully configured AI agent with:
+- ✅ API key auto-provisioned (no signup needed)
+- ✅ 107+ skills pre-installed
+- ✅ Telegram / WeChat gateway ready to configure
+- ✅ MiMo v2.5 Pro model via KOPI Proxy
+
+## ☕ What is KOPI?
+
+In Singapore's kopitiams, ordering coffee is an art:
+
+| Order | Meaning |
+|-------|---------|
+| **KOPI O** | Black coffee, no milk |
+| **KOPI Siew Dai** | Less sugar ⭐ *Our pick* |
+| **KOPI Gau** | Strong / thick |
+| **KOPI Peng** | Iced |
+| **KOPI C** | With evaporated milk |
+| **KOPI Kosong** | No sugar, no milk |
+| **KOPI Po** | Weak / diluted |
+| **KOPI Gah Dai** | Extra sweet |
+
+KOPI Siew Dai Agent = less sugar, full flavor. Minimum config, maximum capability.
+
+---
+
+## 🎯 Features
+
+- **One command install** — `curl | bash`, zero manual config
+- **API key auto-provisioned** — no signup, no credit card, just works
+- **107+ pre-installed skills** — GitHub, Telegram, YouTube, Docker, Obsidian, Notion, and more
+- **Multi-platform messaging** — Telegram + WeChat gateway, configure after install
+- **KOPI Proxy** — built-in model proxy, customers never see API keys or model names
+- **Auto-updates** — skills sync automatically, agent evolves over time
+- **Secure** — API keys stored at system level, invisible to users
+- **Bilingual** — Chinese and English support out of the box
+
+## 🤖 Models
+
+All models proxied through KOPI Proxy — no API key needed.
+
+| Client Model | Upstream | Notes |
+|-------------|----------|-------|
+| `kopi-siew-dai` | MiMo v2.5 Pro | Default, strongest |
+| `kopi-siew-dai-flash` | MiMo v2 Flash | Fast responses |
+| `kopi-gau` | DeepSeek v4 Flash | Strong reasoning |
+| `kopi-o` | MiMo v2.5 Pro | Classic |
+| `kopi-o-flash` | MiMo v2 Flash | Classic fast |
+
+Switch models in chat: `/model kopi-gau`
+
+## 💬 Usage
+
+```bash
+# Interactive chat
+kopi
+
+# One-shot query
+kopi "write a Python script to rename files"
+
+# Start messaging gateway
+kopi gateway setup
+
+# Check health
+kopi doctor
+```
+
+## 📋 Common Commands
+
+| Command | Description |
+|---------|-------------|
+| `kopi` | Start interactive chat |
+| `kopi gateway setup` | Configure Telegram / WeChat |
+| `kopi gateway start` | Start messaging gateway |
+| `kopi doctor` | Diagnose issues |
+| `kopi logs` | View logs |
+| `kopi status` | Check status |
+
+## 🛠 Skills (107+)
+
+| Category | Count | Examples |
+|----------|-------|----------|
+| Messaging | 5 | Telegram, WhatsApp, WeChat, Discord, Signal |
+| Search | 4 | Web Search, YouTube, ArXiv, Polymarket |
+| Dev | 6 | GitHub, Python, Node.js, Docker, Debugging |
+| Data | 4 | Jupyter, Pandas, Visualization, Web Scraping |
+| Creative | 8 | ASCII Art, Infographic, Diagram, Pixel Art |
+| Productivity | 8 | Obsidian, Notion, Google Workspace, PDF |
+| AI/ML | 4 | vLLM, LoRA Fine-tuning, HuggingFace, W&B |
+| Smart Home | 2 | Philips Hue, Home Assistant |
+| Media | 5 | Spotify, YouTube, GIF, Music Generation |
+| DevOps | 5 | API Platform, Webhook, Subdomain Deploy |
+
+## ⚙️ Configuration
+
+Config file: `~/.kopi/config.yaml`
+
+```yaml
+model:
+  default: kopi-siew-dai
+  provider: custom
+  base_url: https://kopi.readinghero.xyz/kp/v1
+  api_key: kp-xxxxxxxx         # Auto-provisioned during install
+  context_length: 256000
+
+agent:
+  max_turns: 90
+
+terminal:
+  timeout: 180
+
+display:
+  skin: default
+  show_cost: true
+
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+```
+
+## 🔧 Troubleshooting
+
+**Installation failed**
+- `dpkg` interrupted → `sudo dpkg --configure -a`
+- Python too old → script auto-installs 3.11+
+- Network issues → ensure you can reach kopi.readinghero.xyz
+
+**401 Invalid API Key**
+- Check `~/.kopi/config.yaml` → `api_key` field
+- Verify `base_url` is `https://kopi.readinghero.xyz/kp/v1`
+- Run `kopi doctor`
+
+**Gateway not responding**
+- `systemctl status kopi-gateway`
+- `journalctl -u kopi-gateway -f`
+- Verify bot token is correct
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE)
+
+## 🏢 About
+
+Built by **Xing Bao Ku PTE LTD** · Singapore 🇸🇬
+
+Like less sugar coffee — simple, pure, effective.

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KOPI Agent 文档</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563eb;--blue-dark:#1d4ed8;--blue-light:#3b82f6;--gold:#f59e0b;--gold-light:#fbbf24;--gold-dark:#d97706;--bg:#ffffff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--gray-900:#0f172a}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--gray-800);background:var(--bg);line-height:1.7}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:0.75rem 2rem;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--gray-200)}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:1.25rem;font-weight:800;color:var(--gray-900);text-decoration:none;display:flex;align-items:center;gap:0.5rem}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.75rem;align-items:center}
+.nav-links a{color:var(--gray-600);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-links a.active{color:var(--blue);font-weight:600}
+.lang-switch{display:flex;gap:3px;background:var(--gray-100);border-radius:8px;padding:3px}
+.lang-switch a{padding:5px 14px;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;color:var(--gray-500);transition:all .2s}
+.lang-switch a.active{background:var(--blue);color:#fff}
+.lang-switch a:hover:not(.active){color:var(--gray-800)}
+
+/* LAYOUT */
+.docs{max-width:1100px;margin:0 auto;padding:6rem 1.5rem 4rem;display:flex;gap:3rem}
+.sidebar{width:220px;flex-shrink:0;position:sticky;top:6rem;align-self:start;max-height:calc(100vh - 8rem);overflow-y:auto}
+.sidebar a{display:block;padding:0.4rem 1rem;color:var(--gray-500);text-decoration:none;font-size:0.85rem;border-left:2px solid transparent;transition:all .2s;margin-bottom:0.15rem}
+.sidebar a:hover,.sidebar a.active{color:var(--blue);border-left-color:var(--blue);background:var(--gray-50)}
+.content{flex:1;min-width:0}
+@media(max-width:768px){.docs{flex-direction:column}.sidebar{width:100%;position:static;max-height:none;display:flex;flex-wrap:wrap;gap:0.25rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-200)}.sidebar a{border-left:none;border-bottom:2px solid transparent;padding:0.3rem 0.75rem;font-size:0.8rem}}
+
+/* TYPOGRAPHY */
+h1{font-size:2.25rem;font-weight:800;letter-spacing:-0.02em;margin-bottom:0.5rem}
+h2{font-size:1.5rem;font-weight:700;margin:2.5rem 0 1rem;padding-top:1.5rem;border-top:1px solid var(--gray-200);letter-spacing:-0.01em}
+h2:first-of-type{border-top:none;padding-top:0}
+h3{font-size:1.1rem;font-weight:600;margin:1.5rem 0 0.75rem;color:var(--gray-700)}
+p{margin-bottom:1rem;color:var(--gray-600)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.subtitle{color:var(--gray-500);font-size:1.05rem;margin-bottom:2rem}
+
+/* CODE */
+code{font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--gray-100);padding:0.15em 0.4em;border-radius:4px;color:var(--blue-dark)}
+pre{background:var(--gray-900);color:#e2e8f0;padding:1.25rem 1.5rem;border-radius:12px;overflow-x:auto;margin:1rem 0;font-size:0.85rem;line-height:1.7}
+pre code{background:none;color:inherit;padding:0}
+.code-header{display:flex;align-items:center;justify-content:space-between;background:var(--gray-800);color:var(--gray-400);padding:0.5rem 1rem;border-radius:12px 12px 0 0;font-size:0.75rem;font-weight:600;margin-bottom:-0.5rem}
+.code-header+pre{border-radius:0 0 12px 12px;margin-top:0}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:0.9rem}
+th{text-align:left;padding:0.6rem 1rem;background:var(--gray-50);font-weight:600;color:var(--gray-700);border-bottom:2px solid var(--gray-200)}
+td{padding:0.6rem 1rem;border-bottom:1px solid var(--gray-100);color:var(--gray-600)}
+tr:hover td{background:var(--gray-50)}
+
+/* CALLOUT */
+.callout{padding:1rem 1.25rem;border-radius:10px;margin:1rem 0;font-size:0.9rem}
+.callout-info{background:#eff6ff;border-left:4px solid var(--blue)}
+.callout-warn{background:#fffbeb;border-left:4px solid var(--gold)}
+.callout-success{background:#f0fdf4;border-left:4px solid #22c55e}
+.callout strong{display:block;margin-bottom:0.25rem;color:var(--gray-800)}
+
+/* BADGE */
+.badge{display:inline-block;padding:0.2rem 0.6rem;border-radius:6px;font-size:0.7rem;font-weight:600;vertical-align:middle}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-gold{background:#fef3c7;color:#b45309}
+.badge-green{background:#dcfce7;color:#15803d}
+
+/* LIST */
+ul,ol{margin:0.5rem 0 1rem 1.5rem;color:var(--gray-600)}
+li{margin-bottom:0.35rem}
+li code{font-size:0.8em}
+
+/* FOOTER */
+.footer{text-align:center;padding:3rem 1.5rem;color:var(--gray-500);font-size:0.85rem;border-top:1px solid var(--gray-200);margin-top:4rem}
+.footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+<div class="nav-inner">
+  <a href="/" class="nav-logo">☕ KOPI <span>Agent</span></a>
+  <div class="nav-links">
+    <a href="/">首页</a>
+    <a href="/docs/" class="active">文档</a>
+    <a href="https://github.com/LINYIQ66/kopi-agent" target="_blank">GitHub</a>
+    <div class="lang-switch">
+      <a href="/docs/" class="active">中</a>
+      <a href="/docs/en/">EN</a>
+    </div>
+  </div>
+</div>
+</nav>
+
+<!-- DOCS -->
+<div class="docs">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="#intro">简介</a>
+  <a href="#variants">产品线</a>
+  <a href="#install">安装</a>
+  <a href="#quickstart">快速开始</a>
+  <a href="#commands">命令</a>
+  <a href="#gateway">Gateway</a>
+  <a href="#models">模型</a>
+  <a href="#skills">技能</a>
+  <a href="#config">配置</a>
+  <a href="#troubleshoot">故障排除</a>
+</aside>
+
+<!-- CONTENT -->
+<main class="content">
+
+<h1>☕ KOPI Agent 文档</h1>
+<p class="subtitle">新加坡咖啡 × AI — 一行命令，装好你的AI助手</p>
+
+<h2 id="intro">简介</h2>
+<p>KOPI Agent 是基于 Hermes Agent 深度定制的 AI 代理平台，专为新加坡及东南亚用户打造。像在咖啡摊点咖啡一样简单 — 选你的口味，一行命令装好。</p>
+
+<div class="callout callout-info">
+<strong>☕ 为什么叫 KOPI？</strong>
+在新加坡，KOPI 不只是咖啡 — 是一种文化。从 KOPI O（黑咖啡）到 KOPI Siew Dai（少糖），每种口味代表不同的浓度和甜度。KOPI Agent 也是这样：选你需要的版本，浓淡自选。
+</div>
+
+<h2 id="variants">产品线</h2>
+
+<table>
+<tr><th>版本</th><th>模型</th><th>说明</th></tr>
+<tr><td><strong>KOPI O</strong> <span class="badge badge-gold">经典</span></td><td>MiMo v2.5 Pro</td><td>经典原味，全功能版</td></tr>
+<tr><td><strong>KOPI Siew Dai</strong> <span class="badge badge-blue">少糖</span></td><td>MiMo v2.5 Pro</td><td>轻量版，同样的模型，更简洁的配置</td></tr>
+<tr><td><strong>KOPI O Flash</strong></td><td>MiMo v2 Flash</td><td>快速版，响应更快</td></tr>
+<tr><td><strong>KOPI Gau</strong> <span class="badge badge-green">浓</span></td><td>DeepSeek v4 Flash</td><td>浓厚版，推理能力更强</td></tr>
+</table>
+
+<h2 id="install">安装</h2>
+
+<h3>KOPI O（经典版）</h3>
+<pre><code>curl -fsSL https://kopi.readinghero.xyz/install.sh | bash</code></pre>
+
+<h3>KOPI Siew Dai（少糖版）</h3>
+<pre><code>curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash</code></pre>
+
+<div class="callout callout-info">
+<strong>💡 安装过程</strong>
+脚本会自动完成：系统检测 → 安装依赖 → Python 检查 → 克隆代码 → 创建虚拟环境 → 安装依赖 → 开通 API Key → 生成配置 → 预装 100+ 技能。最后一步配置消息平台（Telegram / WeChat）。
+</div>
+
+<h3>手动提供 API Key</h3>
+<pre><code>curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash</code></pre>
+
+<h3>系统要求</h3>
+<ul>
+<li>操作系统：Ubuntu 20.04+, Debian 11+, CentOS 8+, Fedora, Arch</li>
+<li>架构：x86_64 / arm64</li>
+<li>Python：3.11+（脚本自动安装）</li>
+<li>内存：1GB+ 推荐</li>
+<li>磁盘：2GB+ 可用空间</li>
+<li>网络：需要访问 kopi.readinghero.xyz</li>
+</ul>
+
+<h2 id="quickstart">快速开始</h2>
+
+<h3>交互式聊天</h3>
+<pre><code>kopi</code></pre>
+<p>直接在终端里和 AI 对话。支持工具调用、代码执行、文件操作等。</p>
+
+<h3>单次提问</h3>
+<pre><code>kopi "帮我写一个 Python 脚本，批量重命名文件"</code></pre>
+
+<h3>切换模型</h3>
+<pre><code>/model kopi-gau       # 切换到 DeepSeek 浓缩版
+/model kopi-o-flash   # 切换到快速版
+/model kopi-o         # 切回经典版</code></pre>
+
+<h2 id="commands">常用命令</h2>
+
+<table>
+<tr><th>命令</th><th>说明</th></tr>
+<tr><td><code>kopi</code></td><td>启动交互式聊天</td></tr>
+<tr><td><code>kopi gateway start</code></td><td>启动消息网关（Telegram/WeChat）</td></tr>
+<tr><td><code>kopi gateway stop</code></td><td>停止消息网关</td></tr>
+<tr><td><code>kopi doctor</code></td><td>诊断问题</td></tr>
+<tr><td><code>kopi setup</code></td><td>完整设置向导</td></tr>
+<tr><td><code>kopi logs</code></td><td>查看日志</td></tr>
+<tr><td><code>kopi status</code></td><td>查看状态</td></tr>
+</table>
+
+<h3>聊天中命令</h3>
+<table>
+<tr><th>命令</th><th>说明</th></tr>
+<tr><td><code>/model &lt;name&gt;</code></td><td>切换模型</td></tr>
+<tr><td><code>/new</code></td><td>新对话</td></tr>
+<tr><td><code>/skills</code></td><td>查看已安装技能</td></tr>
+<tr><td><code>/memory</code></td><td>查看记忆</td></tr>
+<tr><td><code>/help</code></td><td>帮助</td></tr>
+</table>
+
+<h2 id="gateway">Gateway（消息网关）</h2>
+<p>KOPI Agent 可以通过 Telegram 和 WeChat 与你交互，像聊天一样使用 AI。</p>
+
+<h3>Telegram 配置</h3>
+<ol>
+<li>在 Telegram 搜索 <code>@BotFather</code></li>
+<li>发送 <code>/newbot</code> 创建 Bot</li>
+<li>复制获得的 Token</li>
+<li>运行 <code>kopi gateway setup</code> 并输入 Token</li>
+</ol>
+
+<h3>systemd 服务</h3>
+<pre><code>systemctl start kopi-gateway     # 启动
+systemctl stop kopi-gateway      # 停止
+systemctl status kopi-gateway    # 状态
+journalctl -u kopi-gateway -f    # 日志</code></pre>
+
+<h2 id="models">模型</h2>
+<p>所有模型通过 KOPI Proxy 代理，客户无需自备 API Key。</p>
+
+<table>
+<tr><th>客户端模型名</th><th>上游模型</th><th>说明</th></tr>
+<tr><td><code>kopi-o</code></td><td>MiMo v2.5 Pro</td><td>默认，综合能力最强</td></tr>
+<tr><td><code>kopi-o-flash</code></td><td>MiMo v2 Flash</td><td>快速响应</td></tr>
+<tr><td><code>kopi-siew-dai</code></td><td>MiMo v2.5 Pro</td><td>Siew Dai 版默认</td></tr>
+<tr><td><code>kopi-siew-dai-flash</code></td><td>MiMo v2 Flash</td><td>Siew Dai 快速版</td></tr>
+<tr><td><code>kopi-gau</code></td><td>DeepSeek v4 Flash</td><td>推理能力强</td></tr>
+</table>
+
+<h2 id="skills">技能</h2>
+<p>安装时自动预装 100+ 技能，涵盖：</p>
+
+<table>
+<tr><th>类别</th><th>技能数</th><th>示例</th></tr>
+<tr><td>核心开发</td><td>15</td><td>plan, debugging, TDD, code-review</td></tr>
+<tr><td>GitHub</td><td>6</td><td>PR workflow, issues, repo management</td></tr>
+<tr><td>研究</td><td>6</td><td>arXiv, blog monitoring, Jupyter</td></tr>
+<tr><td>生产力</td><td>8</td><td>Google Workspace, Notion, PowerPoint</td></tr>
+<tr><td>媒体</td><td>5</td><td>YouTube, Twitter, Spotify</td></tr>
+<tr><td>创意</td><td>8</td><td>架构图, 漫画, 信息图, 像素画</td></tr>
+<tr><td>运维</td><td>5</td><td>Docker, Kanban, CLI</td></tr>
+<tr><td>其他</td><td>50+</td><td>邮件, 游戏, 智能家居, 红队测试</td></tr>
+</table>
+
+<h2 id="config">配置文件</h2>
+<p>配置文件位于 <code>~/.kopi/config.yaml</code>：</p>
+
+<pre><code># 大模型配置
+model:
+  default: kopi-o              # 默认模型
+  provider: custom
+  base_url: https://kopi.readinghero.xyz/kp/v1
+  api_key: kp-xxxxxxxx         # 安装时自动获取
+  context_length: 256000
+
+# 代理配置
+agent:
+  max_turns: 90
+
+# 终端配置
+terminal:
+  timeout: 180
+
+# 显示配置
+display:
+  skin: default
+  show_cost: true
+
+# 内存配置
+memory:
+  memory_enabled: true
+  user_profile_enabled: true</code></pre>
+
+<h2 id="troubleshoot">故障排除</h2>
+
+<h3>安装失败</h3>
+<div class="callout callout-warn">
+<strong>⚠️ 常见问题</strong>
+<ul>
+<li><code>dpkg</code> 中断 → 运行 <code>sudo dpkg --configure -a</code></li>
+<li>Python 版本太低 → 脚本会自动安装 3.11+</li>
+<li>网络问题 → 确认能访问 kopi.readinghero.xyz</li>
+</ul>
+</div>
+
+<h3>API 相关</h3>
+<div class="callout callout-warn">
+<strong>⚠️ 401 Invalid API Key</strong>
+<ul>
+<li>检查 <code>~/.kopi/config.yaml</code> 中 <code>api_key</code> 是否正确</li>
+<li>确认 <code>base_url</code> 是 <code>https://kopi.readinghero.xyz/kp/v1</code></li>
+<li>运行 <code>kopi doctor</code> 诊断</li>
+</ul>
+</div>
+
+<h3>Gateway 相关</h3>
+<div class="callout callout-warn">
+<strong>⚠️ Telegram Bot 无响应</strong>
+<ul>
+<li>检查 <code>systemctl status kopi-gateway</code></li>
+<li>查看日志 <code>journalctl -u kopi-gateway -f</code></li>
+<li>确认 Bot Token 正确</li>
+</ul>
+</div>
+
+<div class="callout callout-success">
+<strong>✅ 获取帮助</strong>
+GitHub Issues: <a href="https://github.com/LINYIQ66/kopi-agent" target="_blank">github.com/LINYIQ66/kopi-agent</a>
+</div>
+
+</main>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+<p>☕ KOPI Agent by <a href="/">Xing Bao Ku PTE LTD</a> · Singapore 🇸🇬</p>
+<p style="margin-top:0.5rem"><a href="https://github.com/LINYIQ66/kopi-agent" target="_blank">GitHub</a></p>
+</footer>
+
+<script>
+// Sidebar active state on scroll
+const sections = document.querySelectorAll('h2[id]');
+const links = document.querySelectorAll('.sidebar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+  links.forEach(l => { l.classList.toggle('active', l.getAttribute('href') === '#' + current); });
+});
+</script>
+</body>
+</html>
