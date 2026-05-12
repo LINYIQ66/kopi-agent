@@ -25,7 +25,7 @@ NC='\033[0m'
 KOPI_HOME="${KOPI_HOME:-/usr/local/lib/kopi-agent}"
 KOPI_CONFIG_DIR="${KOPI_CONFIG_DIR:-$HOME/.kopi}"
 KOPI_CREDENTIALS_FILE="/etc/kopi-agent/credentials"
-PROVISION_URL="https://proxy.happysocial.xyz/v1/provision"
+PROVISION_URL="https://kopi.readinghero.xyz/kp/v1/provision"
 PROVISION_TOKEN="kopi-provision-2026"
 REPO_URL="https://github.com/LINYIQ66/kopi-agent.git"
 MIN_PYTHON_VERSION="3.11"
@@ -284,7 +284,7 @@ generate_config() {
 model:
   default: kopi-o
   provider: custom
-  base_url: https://proxy.happysocial.xyz/v1
+  base_url: https://kopi.readinghero.xyz/kp/v1
   api_key_file: ${KOPI_CREDENTIALS_FILE}
   context_length: 128000
 
