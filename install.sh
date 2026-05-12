@@ -4,8 +4,8 @@
 # By Xing Bao Ku PTE LTD
 #
 # Usage:
-#   curl -fsSL https://kopi.happysocial.xyz/install.sh | bash
-#   curl -fsSL https://kopi.happysocial.xyz/install.sh | KOPI_API_KEY=kp-xxx bash
+#   curl -fsSL https://kopi.readinghero.xyz/install.sh | bash
+#   curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash
 #
 # ═══════════════════════════════════════════════════════════════════════
 
@@ -254,7 +254,7 @@ except:
             echo -e "${RED}失败${NC}"
             echo ""
             echo "  开通账号失败，请手动提供密钥:"
-            echo "    curl -fsSL https://kopi.happysocial.xyz/install.sh | KOPI_API_KEY=kp-xxx bash"
+            echo "    curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash"
             fail "API Key 获取失败"
         fi
         echo -e "${GREEN}✓${NC}"
@@ -539,7 +539,7 @@ show_completion() {
     echo -e "    ${KOPI_CONFIG_DIR}/.env"
     echo -e "    ${KOPI_CREDENTIALS_FILE}"
     echo ""
-    echo -e "  ${DIM}文档: https://kopi.happysocial.xyz/docs/${NC}"
+    echo -e "  ${DIM}文档: https://kopi.readinghero.xyz/docs/${NC}"
     echo -e "  ${DIM}支持: https://github.com/xingbaoku/kopi-agent/issues${NC}"
     echo ""
     echo -e "${BOLD}  Built with ❤️ by Xing Bao Ku PTE LTD${NC}"
