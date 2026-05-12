@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "name": "kopi-agent",
+  "display_name": "KOPI O Agent",
+  "description": "AI agent by Xing Bao Ku PTE LTD with 90+ tools, persistent memory, and multi-platform support",
+  "icon": "icon.svg",
+  "distribution": {
+    "type": "command",
+    "command": "kopi",
+    "args": ["acp"]
+  }
+}
