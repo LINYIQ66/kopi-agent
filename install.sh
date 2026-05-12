@@ -27,7 +27,7 @@ KOPI_CONFIG_DIR="${KOPI_CONFIG_DIR:-$HOME/.kopi}"
 KOPI_CREDENTIALS_FILE="/etc/kopi-agent/credentials"
 PROVISION_URL="https://proxy.happysocial.xyz/v1/provision"
 PROVISION_TOKEN="kopi-provision-2026"
-REPO_URL="https://github.com/xingbaoku/kopi-agent.git"
+REPO_URL="https://github.com/LINYIQ66/kopi-agent.git"
 MIN_PYTHON_VERSION="3.11"
 
 # ── Helpers ────────────────────────────────────────────────────────────
@@ -540,7 +540,7 @@ show_completion() {
     echo -e "    ${KOPI_CREDENTIALS_FILE}"
     echo ""
     echo -e "  ${DIM}文档: https://kopi.readinghero.xyz/docs/${NC}"
-    echo -e "  ${DIM}支持: https://github.com/xingbaoku/kopi-agent/issues${NC}"
+    echo -e "  ${DIM}支持: https://github.com/LINYIQ66/kopi-agent/issues${NC}"
     echo ""
     echo -e "${BOLD}  Built with ❤️ by Xing Bao Ku PTE LTD${NC}"
     echo ""

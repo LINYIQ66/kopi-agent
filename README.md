@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://kopi.happysocial.xyz/docs/"><img src="https://img.shields.io/badge/Docs-kopi.happysocial.xyz-FFD700?style=for-the-badge" alt="Documentation"></a>
-  <a href="https://github.com/xingbaoku/kopi-agent/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
+  <a href="https://github.com/LINYIQ66/kopi-agent/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
   <a href="https://happysocial.xyz"><img src="https://img.shields.io/badge/Built%20by-Xing%20Bao%20Ku%20PTE%20LTD-blueviolet?style=for-the-badge" alt="Built by Xing Bao Ku PTE LTD"></a>
 </p>
 
@@ -132,7 +132,7 @@ gateway:
 
 ## 🤝 社区
 
-- 🐛 [问题反馈](https://github.com/xingbaoku/kopi-agent/issues)
+- 🐛 [问题反馈](https://github.com/LINYIQ66/kopi-agent/issues)
 - 📚 [技能中心](https://agentskills.io)
 
 ## 📄 许可证
