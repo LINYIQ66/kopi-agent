@@ -8046,9 +8046,19 @@ class GatewayRunner:
         else:
             ctx_display = str(context_length)
 
+        # Resolve display name from provider profile
+        provider_display = provider or 'openrouter'
+        try:
+            from providers import get_provider_profile as _get_pp
+            _pp = _get_pp(provider) if provider else None
+            if _pp and _pp.display_name:
+                provider_display = _pp.display_name
+        except Exception:
+            pass
+
         lines = [
             f"◆ Model: `{model}`",
-            f"◆ Provider: {provider or 'openrouter'}",
+            f"◆ Provider: {provider_display}",
             f"◆ Context: {ctx_display} tokens ({ctx_source})",
         ]
 

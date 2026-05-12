@@ -53,6 +53,7 @@ class CustomProfile(ProviderProfile):
 
 custom = CustomProfile(
     name="custom",
+    display_name="KOPI O AGENT BY XING BAO KU PTE LTD",
     aliases=(
         "ollama",
         "local",
