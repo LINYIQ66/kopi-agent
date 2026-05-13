@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════
-# KOPI O Agent — 一键安装脚本
+# KOPI Siew Dai — 一键安装脚本
 # By Xing Bao Ku PTE LTD
 #
 # Usage:
-#   curl -fsSL https://kopi.readinghero.xyz/install.sh | bash
-#   curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash
+#   curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash
+#   curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | KOPI_API_KEY=kp-xxx bash
 #
 # Non-interactive mode (curl | bash): installs everything, skips gateway config.
-# Interactive mode (bash install.sh): full install + gateway setup at the end.
+# Interactive mode (bash install-siew-dai.sh): full install + gateway setup at the end.
 # ═══════════════════════════════════════════════════════════════════════
 
 set -euo pipefail
@@ -24,13 +24,13 @@ DIM='\033[2m'
 NC='\033[0m'
 
 # ── Config ─────────────────────────────────────────────────────────────
-KOPI_HOME="${KOPI_HOME:-/usr/local/lib/kopi-agent}"
+KOPI_HOME="${KOPI_HOME:-/usr/local/lib/kopi-siew-dai}"
 KOPI_CONFIG_DIR="${KOPI_CONFIG_DIR:-$HOME/.kopi}"
 KOPI_CREDENTIALS_FILE="/etc/kopi-agent/credentials"
 PROVISION_URL="https://kopi.readinghero.xyz/kp/v1/provision"
 # PROVISION_TOKEN 由后端动态注入，不要硬编码
 PROVISION_TOKEN="${KOPI_PROVISION_TOKEN:-}"
-REPO_URL="https://github.com/LINYIQ66/kopi-agent.git"
+REPO_URL="https://github.com/LINYIQ66/kopi-siew-dai.git"
 MIN_PYTHON_VERSION="3.11"
 IS_TTY=false
 [[ -t 0 ]] && IS_TTY=true
@@ -53,8 +53,8 @@ banner() {
     ╚═╝  ╚═╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═════╝
 EOF
     echo -e "${NC}"
-    echo -e "${DIM}  KOPI O Agent — by Xing Bao Ku PTE LTD${NC}"
-    echo -e "${DIM}  一键安装，一步到位${NC}"
+    echo -e "${DIM}  KOPI Siew Dai — by Xing Bao Ku PTE LTD${NC}"
+    echo -e "${DIM}  少糖版 — 一键安装，一步到位${NC}"
     echo ""
 }
 
@@ -177,7 +177,7 @@ install_python() {
 
 # ── Clone & Install KOPI Agent ─────────────────────────────────────────
 install_kopi() {
-    step "安装 KOPI O Agent"
+    step "安装 KOPI Siew Dai"
 
     if [[ -d "$KOPI_HOME/.git" ]]; then
         info "检测到已有安装，更新中..."
@@ -199,7 +199,7 @@ install_kopi() {
     pip install --upgrade pip -q 2>/dev/null
     pip install -e ".[all]" -q 2>/dev/null || pip install -e . -q 2>/dev/null
 
-    ok "KOPI O Agent 安装完成"
+    ok "KOPI Siew Dai 安装完成"
 }
 
 # ── Create CLI Wrapper ─────────────────────────────────────────────────
@@ -208,7 +208,7 @@ create_cli_wrapper() {
 
     cat > /usr/local/bin/kopi << WRAPPER
 #!/usr/bin/env bash
-# KOPI O Agent CLI wrapper
+# KOPI Siew Dai CLI wrapper
 source ${KOPI_HOME}/venv/bin/activate 2>/dev/null || true
 export PYTHONPATH="${KOPI_HOME}:\$PYTHONPATH"
 cd ${KOPI_HOME}
@@ -260,7 +260,7 @@ except:
                 echo -e "${RED}失败${NC}"
                 echo ""
                 echo "  无法自动获取安装凭证，请手动提供 API Key:"
-                echo "    curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash"
+                echo "    curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | KOPI_API_KEY=kp-xxx bash"
                 fail "获取安装凭证失败"
             fi
             echo -e "${GREEN}✓${NC}"
@@ -286,7 +286,7 @@ except:
             echo -e "${RED}失败${NC}"
             echo ""
             echo "  开通账号失败，请手动提供密钥:"
-            echo "    curl -fsSL https://kopi.readinghero.xyz/install.sh | KOPI_API_KEY=kp-xxx bash"
+            echo "    curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | KOPI_API_KEY=kp-xxx bash"
             fail "API Key 获取失败"
         fi
         echo -e "${GREEN}✓${NC}"
@@ -308,13 +308,13 @@ generate_config() {
     # config.yaml — api_key inline (custom provider requires it)
     cat > "$KOPI_CONFIG_DIR/config.yaml" << CONFIG
 # ═══════════════════════════════════════════════════════════════════════
-# KOPI O Agent 配置文件
+# KOPI Siew Dai 配置文件
 # By Xing Bao Ku PTE LTD
 # ═══════════════════════════════════════════════════════════════════════
 
 # 大模型配置
 model:
-  default: kopi-o
+  default: kopi-siew-dai
   provider: custom
   base_url: https://kopi.readinghero.xyz/kp/v1
   api_key: ${KOPI_API_KEY}
@@ -352,7 +352,7 @@ CONFIG
 
     # .env file
     cat > "$KOPI_CONFIG_DIR/.env" << ENV
-# KOPI O Agent Environment Variables
+# KOPI Siew Dai Environment Variables
 # 时区
 TZ=Asia/Singapore
 ENV
@@ -522,7 +522,7 @@ install_gateway_service() {
     # Create systemd service
     cat > /etc/systemd/system/kopi-gateway.service << SERVICE
 [Unit]
-Description=KOPI O Agent Gateway
+Description=KOPI Siew Dai Gateway
 After=network.target
 StartLimitIntervalSec=600
 StartLimitBurst=5
@@ -559,7 +559,7 @@ SERVICE
 show_completion() {
     echo ""
     echo -e "${BOLD}${GREEN}═══════════════════════════════════════════════════════════${NC}"
-    echo -e "${BOLD}${GREEN}  ✓ KOPI O Agent 安装完成!${NC}"
+    echo -e "${BOLD}${GREEN}  ✓ KOPI Siew Dai 安装完成!${NC}"
     echo -e "${BOLD}${GREEN}═══════════════════════════════════════════════════════════${NC}"
     echo ""
     echo -e "  ${BOLD}快速开始:${NC}"
