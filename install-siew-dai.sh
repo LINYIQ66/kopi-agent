@@ -135,7 +135,7 @@ check_python() {
     PYTHON_CMD=""
     for cmd in python3.12 python3.11 python3; do
         if command -v "$cmd" &>/dev/null; then
-            ver=$("$cmd" --version 2>&1 | grep -oP '\d+\.\d+' | head -1)
+            ver=$("$cmd" --version 2>&1 | grep -oE '[0-9]+\.[0-9]+' | head -1)
             major=$(echo "$ver" | cut -d. -f1)
             minor=$(echo "$ver" | cut -d. -f2)
             if [[ "$major" -ge 3 ]] && [[ "$minor" -ge 11 ]]; then
