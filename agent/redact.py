@@ -186,6 +186,19 @@ _PREFIX_RE = re.compile(
     r"(?<![A-Za-z0-9_-])(" + "|".join(_PREFIX_PATTERNS) + r")(?![A-Za-z0-9_-])"
 )
 
+# ── PII Patterns ────────────────────────────────────────────────
+# Email addresses
+_EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
+
+# Credit card numbers (16-digit with optional spaces/dashes, must pass Luhn-like check)
+# Conservative: match 13-19 digit sequences with common CC separators
+_CC_RE = re.compile(
+    r"\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b"
+)
+
+# Social Security Numbers (XXX-XX-XXXX)
+_SSN_RE = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
+
 
 def mask_secret(
     value: str,
@@ -388,6 +401,26 @@ def redact_sensitive_text(text: str, *, force: bool = False, code_file: bool = F
             return phone[:2] + "****" + phone[-2:]
         return phone[:4] + "****" + phone[-4:]
     text = _SIGNAL_PHONE_RE.sub(_redact_phone, text)
+
+    # ── PII Redaction ───────────────────────────────────────
+    # Email addresses
+    def _redact_email(m):
+        email = m.group(0)
+        at_pos = email.index("@")
+        local_part = email[:at_pos]
+        domain = email[at_pos:]
+        if len(local_part) <= 2:
+            masked_local = "***"
+        else:
+            masked_local = local_part[0] + "***" + local_part[-1]
+        return f"{masked_local}{domain}"
+    text = _EMAIL_RE.sub(_redact_email, text)
+
+    # Credit card numbers
+    text = _CC_RE.sub(lambda m: m.group(0)[:7] + " **** **** " + m.group(0)[-4:] if len(m.group(0).replace("-", "").replace(" ", "")) == 16 else m.group(0), text)
+
+    # Social Security Numbers
+    text = _SSN_RE.sub("***-**-****", text)
 
     return text
 
