@@ -1,171 +1,385 @@
 <p align="center">
-  <img src="website/assets/banner.png" alt="KOPI Siew Dai Agent" width="100%">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="landing/assets/banner.png">
+    <img src="assets/banner.png" alt="KOPI AI Agent" width="100%">
+  </picture>
 </p>
 
-# ☕ KOPI Siew Dai Agent
+<div align="center">
 
-<p align="center">
-  <a href="https://kopi.readinghero.xyz/docs/en/"><img src="https://img.shields.io/badge/Docs-kopi.readinghero.xyz-FFD700?style=for-the-badge" alt="Documentation"></a>
-  <a href="https://github.com/LINYIQ66/kopi-siew-dai/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
-  <a href="https://kopi.readinghero.xyz"><img src="https://img.shields.io/badge/Built%20by-Xing%20Bao%20Ku%20PTE%20LTD-blueviolet?style=for-the-badge" alt="Built by Xing Bao Ku PTE LTD"></a>
-</p>
+# ☕ KOPI AI Gateway
 
-**KOPI Siew Dai Agent** — an AI agent for Singapore SMEs by [Xing Bao Ku PTE LTD](https://kopi.readinghero.xyz). Less sugar, full power.
+### Enterprise-grade intelligent routing and orchestration for LLM infrastructure
 
-Built on [Hermes Agent](https://github.com/nousresearch/hermes-agent), deeply customized for Singapore and Southeast Asia. One command install, zero configuration, 107+ skills pre-loaded.
+**Reduce AI costs by up to 60% • Improve reliability with automatic failover • Orchestrate 15+ providers through one unified API**
 
-> **"Siew Dai"** (少糖) is Hokkien for "less sugar" — the Singapore way of ordering coffee with less sweetness. Our AI agent follows the same philosophy: remove the complexity, keep the capability.
+[![Docker](https://img.shields.io/badge/docker-ready-2496ED?style=flat-square&logo=docker&logoColor=white)](https://github.com/LINYIQ66/kopi-agent)
+[![License](https://img.shields.io/badge/license-MIT-22c55e?style=flat-square)](https://github.com/LINYIQ66/kopi-agent/blob/main/LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![Tests](https://img.shields.io/badge/tests-17k%20passing-22c55e?style=flat-square)](https://github.com/LINYIQ66/kopi-agent)
+[![Platforms](https://img.shields.io/badge/platforms-20%2B-8b5cf6?style=flat-square)](https://kopi.readinghero.xyz/docs/)
+[![Status](https://img.shields.io/badge/status-production-brightgreen?style=flat-square)](https://kopi.readinghero.xyz)
+
+[Quick Start](#-quick-start) • [Documentation](https://kopi.readinghero.xyz/docs/) • [Deploy with Docker](#-deployment) • [API Reference](https://kopi.readinghero.xyz/docs/api/)
+
+</div>
+
+---
+
+**Stop wasting money on expensive LLM calls and juggling API keys across half a dozen providers.** KOPI automatically routes every request to the best-performing, most cost-efficient model — with built-in failover, semantic caching, PII masking, and enterprise billing. One integration. Full observability. Zero vendor lock-in.
+
+---
+
+## 🎯 Why KOPI?
+
+| Feature | KOPI | OpenRouter | LiteLLM | Braintrust |
+|---------|------|-----------|---------|------------|
+| **Intelligent Routing** | ✅ Adaptive model selection per request | ❌ Static | Limited | ❌ |
+| **Semantic Cache** | ✅ Vector-based retrieval | ❌ | ❌ | ❌ |
+| **PII Masking** | ✅ Before external inference | ❌ | ❌ | ❌ |
+| **Self-Hosted** | ✅ Full control | ❌ | ✅ | ❌ |
+| **17+ Providers** | ✅ OpenAI, Claude, Gemini, DeepSeek, Llama, Qwen, MiMo... | ✅ | ✅ | ✅ |
+| **20+ Messaging Platforms** | ✅ Telegram, WeChat, WhatsApp, Discord, SMS, Email... | ❌ | ❌ | ❌ |
+| **Enterprise Billing** | ✅ Token tracking, cost allocation, per-customer | ❌ | Limited | ✅ |
+| **Agent Loop** | ✅ Built-in autonomous agent (tool calling, multi-turn) | ❌ | ❌ | ❌ |
+| **Flexible Routing** | ✅ Rate limit, cost, latency, priority, failover, weighted round-robin, model marketplace | Basic | Basic | ❌ |
+
+---
+
+## 🌟 Core Capabilities
+
+### 🧠 Intelligent Model Routing
+Automatically selects the optimal model for every request — balancing cost, latency, capability, and availability. Define routing rules by task type, user tier, or budget threshold.
+
+```
+Client Request → KOPI Gateway → Router
+                                  ├── Default: MiMo v2.5 Pro (general reasoning)
+                                  ├── Flash: DeepSeek v4 / MiMo v2 Flash (fast responses)
+                                  ├── Strong: Claude Sonnet (complex reasoning)
+                                  ├── Local: Ollama / vLLM (private data)
+                                  └── Fallback: Nvidia NIM / OpenRouter (resilience)
+```
+
+### ⚡ Semantic Caching
+Reduce repeated token costs by up to 80% through vector-based cache retrieval. Similar queries return cached responses automatically — no configuration needed.
+
+### 🛡️ Reliability Layer
+Built-in automatic failover across providers. If a model returns an error or times out, KOPI transparently retries on the next available provider. Zero downtime for your users.
+
+### 🔒 Enterprise Security
+PII masking before external inference. API keys stored at system level, invisible to end users. Self-hosted deployment keeps sensitive data within your infrastructure.
+
+### 📊 Cost Analytics
+Track token usage, cost per request, model distribution, and ROI — per customer, per team, or per service. Export to your existing observability stack.
+
+### 🌐 Multi-Platform Gateway
+Connect your AI to **20+ messaging platforms** — Telegram, WeChat, WhatsApp, Discord, SMS, Email, Signal, Matrix, Slack, and more. One agent, everywhere your users are.
+
+### 🤖 Autonomous Agent Loop
+Full agent execution with tool calling, multi-turn reasoning, session memory, and skill orchestration. KOPI doesn't just route — it *acts*.
+
+### 🧩 80+ Pre-Built Skills
+GitHub automation, YouTube analysis, Notion/Obsidian integration, PDF processing, stock market queries, code review, deployment, and more. Extend with custom plugins.
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        Your Application                      │
+│           (CLI · Telegram · WeChat · Discord · API)          │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+                     HTTP / WebSocket
+                           │
+                    ┌──────▼──────┐
+                    │ KOPI Gateway │
+                    │  (Platform   │
+                    │   Adapters)  │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │    Router   │
+                    │  (Rules +   │
+                    │   Fallback) │
+                    └──────┬──────┘
+                           │
+              ┌────────────┼────────────┐
+              │            │            │
+        ┌─────▼─────┐ ┌───▼───┐ ┌─────▼─────┐
+        │ Intelligent│ │Semantic│ │  Cost &    │
+        │  Router    │ │ Cache │ │ Observability│
+        └─────┬─────┘ └───────┘ └─────┬─────┘
+              │                       │
+     ┌────────┼────────┬───────┐      │
+     │        │        │       │      │
+ ┌───▼──┐ ┌──▼──┐ ┌──▼──┐ ┌──▼──┐   │
+ │OpenAI │ │Claude│ │Gemini│ │Deep‑│   │
+ │  GPT  │ │ Son‑ │ │  2.5 │ │Seek │   │
+ │  4.1  │ │ net  │ │ Flash│ │  V4 │   │
+ └──────┘ └─────┘ └──────┘ └─────┘   │
+                                       │
+ ┌───▼──┐ ┌──▼──┐ ┌──▼──┐ ┌──▼──┐   │
+ │Llama  │ │Qwen │ │ MiMo│ │Local│   │
+ │  via  │ │ via │ │ v2.5│ │vLLM │   │
+ │vLLM   │ │ API │ │  Pro│ │ Oll.│   │
+ └──────┘ └─────┘ └─────┘ └─────┘   │
+                                       │
+ ┌─────────────────────────────────────▼─┐
+ │         OpenRouter / Nvidia NIM       │
+ │         (Fallback Tier)               │
+ └───────────────────────────────────────┘
+```
+
+**Key Design Principles:**
+- **No single point of failure** — every layer has fallback
+- **Provider-agnostic routing** — models are interchangeable by config, not code
+- **Privacy by default** — sensitive data stays on your infrastructure
 
 ---
 
 ## 🚀 Quick Start
 
+### One-Command Install (Recommended)
+
 ```bash
 curl -fsSL https://kopi.readinghero.xyz/install-siew-dai.sh | bash
 ```
 
-That's it. In 3 minutes you have a fully configured AI agent with:
-- ✅ API key auto-provisioned (no signup needed)
-- ✅ 107+ skills pre-installed
-- ✅ Telegram / WeChat gateway ready to configure
-- ✅ MiMo v2.5 Pro model via KOPI Proxy
+In **3 minutes** you get:
+- ✅ API key auto-provisioned — no signup, no credit card
+- ✅ 80+ skills pre-installed and ready to use
+- ✅ Telegram / WeChat gateway configurable post-install
+- ✅ MiMo v2.5 Pro model included via KOPI Proxy
 
-## ☕ What is KOPI?
+### Docker (Self-Hosted)
 
-In Singapore's kopitiams, ordering coffee is an art:
+```bash
+git clone https://github.com/LINYIQ66/kopi-agent.git
+cd kopi-agent
+cp .env.example .env
+docker compose up -d
+```
 
-| Order | Meaning |
-|-------|---------|
-| **KOPI O** | Black coffee, no milk |
-| **KOPI Siew Dai** | Less sugar ⭐ *Our pick* |
-| **KOPI Gau** | Strong / thick |
-| **KOPI Peng** | Iced |
-| **KOPI C** | With evaporated milk |
-| **KOPI Kosong** | No sugar, no milk |
-| **KOPI Po** | Weak / diluted |
-| **KOPI Gah Dai** | Extra sweet |
+Then try it:
 
-KOPI Siew Dai Agent = less sugar, full flavor. Minimum config, maximum capability.
+```bash
+# CLI
+docker exec -it kopi-agent kopi "What's the weather in Singapore?"
+
+# API
+curl -X POST http://localhost:8080/v1/chat/completions \
+  -H "Authorization: Bearer $KOPI_API_KEY" \
+  -d '{"model": "kopi-siew-dai", "messages": [{"role": "user", "content": "Hello"}]}'
+```
+
+### Python (pip)
+
+```bash
+pip install kopi-agent
+kopi doctor   # verify installation
+kopi          # start interactive session
+```
 
 ---
 
-## 🎯 Features
-
-- **One command install** — `curl | bash`, zero manual config
-- **API key auto-provisioned** — no signup, no credit card, just works
-- **107+ pre-installed skills** — GitHub, Telegram, YouTube, Docker, Obsidian, Notion, and more
-- **Multi-platform messaging** — Telegram + WeChat gateway, configure after install
-- **KOPI Proxy** — built-in model proxy, customers never see API keys or model names
-- **Auto-updates** — skills sync automatically, agent evolves over time
-- **Secure** — API keys stored at system level, invisible to users
-- **Bilingual** — Chinese and English support out of the box
-
-## 🤖 Models
-
-All models proxied through KOPI Proxy — no API key needed.
-
-| Client Model | Upstream | Notes |
-|-------------|----------|-------|
-| `kopi-siew-dai` | MiMo v2.5 Pro | Default, strongest |
-| `kopi-siew-dai-flash` | MiMo v2 Flash | Fast responses |
-| `kopi-gau` | DeepSeek v4 Flash | Strong reasoning |
-| `kopi-o` | MiMo v2.5 Pro | Classic |
-| `kopi-o-flash` | MiMo v2 Flash | Classic fast |
-
-Switch models in chat: `/model kopi-gau`
-
-## 💬 Usage
+## 💻 Usage Examples
 
 ```bash
-# Interactive chat
+# Interactive agent session
 kopi
 
-# One-shot query
-kopi "write a Python script to rename files"
+# One-shot task
+kopi "Analyze this CSV and generate a summary report"
 
-# Start messaging gateway
-kopi gateway setup
+# Start multi-platform gateway
+kopi gateway start
 
-# Check health
+# Deploy Telegram bot
+kopi gateway setup --platform telegram
+
+# Check system health
 kopi doctor
+
+# View real-time logs
+kopi logs --follow
 ```
 
-## 📋 Common Commands
+```python
+# Python API — embed KOPI in your application
+from kopi import AIAgent
 
-| Command | Description |
-|---------|-------------|
-| `kopi` | Start interactive chat |
-| `kopi gateway setup` | Configure Telegram / WeChat |
-| `kopi gateway start` | Start messaging gateway |
-| `kopi doctor` | Diagnose issues |
-| `kopi logs` | View logs |
-| `kopi status` | Check status |
+agent = AIAgent(
+    model="kopi-siew-dai",
+    base_url="https://kopi.readinghero.xyz/kp/v1"
+)
 
-## 🛠 Skills (107+)
+response = agent.chat("Write a python script to rename all .jpg files in a directory")
+print(response)
+```
 
-| Category | Count | Examples |
-|----------|-------|----------|
-| Messaging | 5 | Telegram, WhatsApp, WeChat, Discord, Signal |
-| Search | 4 | Web Search, YouTube, ArXiv, Polymarket |
-| Dev | 6 | GitHub, Python, Node.js, Docker, Debugging |
-| Data | 4 | Jupyter, Pandas, Visualization, Web Scraping |
-| Creative | 8 | ASCII Art, Infographic, Diagram, Pixel Art |
-| Productivity | 8 | Obsidian, Notion, Google Workspace, PDF |
-| AI/ML | 4 | vLLM, LoRA Fine-tuning, HuggingFace, W&B |
-| Smart Home | 2 | Philips Hue, Home Assistant |
-| Media | 5 | Spotify, YouTube, GIF, Music Generation |
-| DevOps | 5 | API Platform, Webhook, Subdomain Deploy |
+---
 
-## ⚙️ Configuration
+## 🎯 Use Cases
 
-Config file: `~/.kopi/config.yaml`
+### 🏢 SME AI Employees
+Power customer support, sales, and admin automation across Telegram, WeChat, and WhatsApp. Deploy AI agents that actually work with your existing tools — GitHub, Notion, Google Sheets, and more.
+
+### 📈 Financial Research
+Route quantitative analysis, market research, and reporting workloads to the right model. Process PDF reports, analyze spreadsheets, and generate summaries — all through one chat interface.
+
+### 🔐 Enterprise AI Gateway
+Centralize all LLM traffic under one roof with compliance controls, PII masking, cost tracking per department, and audit logs. Self-hosted for data sovereignty.
+
+### 🛠️ DevOps Automation
+Automate deployments, monitor servers, triage GitHub issues, review PRs, and manage infrastructure — all from your team chat or terminal.
+
+### 🧪 AI Product Development
+Built-in A/B testing across models, latency benchmarking, and cost profiling. Ship AI features with confidence knowing the numbers.
+
+---
+
+## 🧩 Supported Providers
+
+| Provider | Models | Status |
+|----------|--------|--------|
+| OpenAI | GPT-4.1, GPT-4o, GPT-4o-mini | ✅ |
+| Anthropic | Claude Sonnet 4, Claude Haiku | ✅ |
+| Google | Gemini 2.5 Pro, Gemini 2.5 Flash | ✅ |
+| DeepSeek | DeepSeek V4, V3 | ✅ |
+| Meta (vLLM) | Llama 3.1, 3.2 | ✅ |
+| MiMo | MiMo v2.5 Pro, v2 Flash | ✅ |
+| Qwen | Qwen 2.5, QwQ | ✅ |
+| Alibaba | Tongyi Qianwen | ✅ |
+| OpenRouter | 300+ community models | ✅ |
+| Nvidia NIM | Nemotron, Llama NIM | ✅ |
+| Ollama | Local models | ✅ |
+| Custom | Any OpenAI-compatible endpoint | ✅ |
+
+---
+
+## 📋 Platform Support
+
+KOPI connects your AI to **20+ messaging platforms** through a unified gateway:
+
+<details>
+<summary><b>Messaging Platforms</b></summary>
+
+| Category | Platforms |
+|----------|-----------|
+| **Instant Messaging** | Telegram, WhatsApp, WeChat, Discord, Signal, Matrix |
+| **Enterprise** | Slack, Mattermost, Teams (via webhook), DingTalk, WeCom (企业微信) |
+| **China Market** | WeChat (微信), Feishu/Lark (飞书), QQ Bot |
+| **Voice/SMS** | Twilio SMS, Email (IMAP/SMTP), BlueBubbles |
+| **Custom** | REST API, Webhook, Home Assistant |
+
+</details>
+
+Each platform adapter is a drop-in plugin — add a new platform in under an hour.
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run test suite
+cd kopi-agent && scripts/run_tests.sh
+
+# Watch mode during development
+pytest -f
+
+# Run specific test categories
+pytest tests/test_routing/ -v
+pytest tests/test_gateway/ -v
+```
+
+✅ **17,000+ tests** across 900+ test files — continuously passing.
+
+---
+
+## 🛠️ Configuration
 
 ```yaml
+# ~/.kopi/config.yaml
 model:
   default: kopi-siew-dai
   provider: custom
   base_url: https://kopi.readinghero.xyz/kp/v1
-  api_key: kp-xxxxxxxx         # Auto-provisioned during install
+  api_key: kp-xxxxx
   context_length: 256000
+
+routing:
+  fallback_enabled: true
+  fallback_models:
+    - kopi-gau
+    - kopi-nemotron
 
 agent:
   max_turns: 90
+  skill_dirs:
+    - ~/.kopi/skills/
+    - ./skills/
 
-terminal:
-  timeout: 180
+gateway:
+  platforms:
+    telegram:
+      enabled: true
+      bot_token: "${TELEGRAM_BOT_TOKEN}"
+    wechat:
+      enabled: true
 
-display:
-  skin: default
-  show_cost: true
+cache:
+  semantic: true
+  ttl: 3600
 
-memory:
-  memory_enabled: true
-  user_profile_enabled: true
+observability:
+  cost_tracking: true
+  log_level: info
 ```
+
+---
 
 ## 🔧 Troubleshooting
 
-**Installation failed**
-- `dpkg` interrupted → `sudo dpkg --configure -a`
-- Python too old → script auto-installs 3.11+
-- Network issues → ensure you can reach kopi.readinghero.xyz
+| Problem | Solution |
+|---------|----------|
+| **Installation fails** | `sudo dpkg --configure -a` if dpkg interrupted |
+| **401 Invalid API Key** | Run `kopi doctor` — verifies API key and proxy connectivity |
+| **Gateway not responding** | `systemctl status kopi-gateway` or `journalctl -u kopi-gateway -f` |
+| **Model returns errors** | KOPI automatically falls back — check `kopi logs` for routing details |
+| **Docker issues** | Ensure ports 8080/8081 not in use; check `docker compose logs` |
 
-**401 Invalid API Key**
-- Check `~/.kopi/config.yaml` → `api_key` field
-- Verify `base_url` is `https://kopi.readinghero.xyz/kp/v1`
-- Run `kopi doctor`
+---
 
-**Gateway not responding**
-- `systemctl status kopi-gateway`
-- `journalctl -u kopi-gateway -f`
-- Verify bot token is correct
+## 🗺️ Roadmap
+
+| Quarter | Focus |
+|---------|-------|
+| **Q2 2026** | ✅ Multi-provider routing · Semantic caching · PII masking · 20 platform adapters |
+| **Q3 2026** | 🔄 Multi-agent orchestration · Advanced billing engine · Model marketplace |
+| **Q4 2026** | 🚧 Enterprise SSO · Custom plugin marketplace · GPU-aware routing |
+| **2027** | 🎯 Federated agent networks · Real-time voice gateway · Autonomous workflow builder |
+
+---
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE)
+**MIT License** — free for personal, commercial, and enterprise use. See [LICENSE](LICENSE).
 
-## 🏢 About
+> Built by **Xing Bao Ku PTE LTD** · Singapore 🇸🇬
+>
+> We believe every company will run on AI. But AI infrastructure today is fragmented, expensive, and unreliable.
+>
+> **KOPI exists to become the intelligent routing layer powering the next generation of enterprise AI systems.**
+>
+> *Like kopi — simple, pure, effective. Less sugar, full power.* ☕
 
-Built by **Xing Bao Ku PTE LTD** · Singapore 🇸🇬
+---
 
-Like less sugar coffee — simple, pure, effective.
+<p align="center">
+  <a href="https://kopi.readinghero.xyz"><b>Website</b></a> •
+  <a href="https://kopi.readinghero.xyz/docs/"><b>Documentation</b></a> •
+  <a href="https://github.com/LINYIQ66/kopi-agent/discussions"><b>Discussions</b></a> •
+  <a href="mailto:hello@kopiaiagent.com"><b>Contact</b></a>
+</p>
