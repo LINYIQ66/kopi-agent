@@ -383,3 +383,51 @@ observability:
   <a href="https://github.com/LINYIQ66/kopi-agent/discussions"><b>Discussions</b></a> •
   <a href="mailto:hello@kopiaiagent.com"><b>Contact</b></a>
 </p>
+
+## 🆕 v0.14.0 — PraisonAI-Inspired Features
+
+### What's New
+
+- **Doom Loop Detection** — Auto-recovery from stuck agents
+- **Guardrails** — Input/output validation with rate limiting
+- **Model Router** — Intelligent cost-optimized routing
+- **Memory Enhancement** — Graph memory + short/long-term separation
+- **Checkpoint/Rollback** — Auto-save before code changes, rollback on error
+- **Session Management** — Auto-save and resume on restart
+- **MCP Auto-Discovery** — Automatic tool discovery from MCP servers
+- **macOS Support** — One-click install on iMac/MacBook
+
+### Installation
+
+```bash
+# VPS (Linux) or iMac (macOS)
+curl -fsSL https://kopiaiagent.com/install.sh | bash
+```
+
+### Configuration
+
+```yaml
+# ~/.kopi/config.yaml
+
+# Model Router — auto-select cheapest model
+model_router:
+  enabled: true
+  strategy: cost_optimized
+  routes:
+    simple: kopi-flash      # DeepSeek V4 Flash (free)
+    coding: kopi-grok       # Grok 4.3 (MCP)
+    reasoning: kopi-grok    # Grok 4.3 (MCP)
+    standard: kopi-o-pro    # MiMo V2 Pro
+
+# Doom Loop Detection
+safety:
+  doom_loop_detection: true
+  max_same_tool_calls: 3
+  auto_recovery: true
+
+# Guardrails
+guardrails:
+  enabled: true
+  rate_limit:
+    max_requests_per_minute: 30
+    max_tokens_per_hour: 500000

@@ -60,16 +60,25 @@ EOF
 
 # ── OS Detection ───────────────────────────────────────────────────────
 detect_os() {
-    if [[ -f /etc/os-release ]]; then
+    OS_TYPE=$(uname -s)
+    
+    if [[ "$OS_TYPE" == "Darwin" ]]; then
+        OS_ID="macos"
+        OS_VERSION=$(sw_vers -productVersion 2>/dev/null || echo "unknown")
+        IS_MACOS=true
+    elif [[ -f /etc/os-release ]]; then
         . /etc/os-release
         OS_ID="${ID:-unknown}"
         OS_VERSION="${VERSION_ID:-unknown}"
+        IS_MACOS=false
     elif [[ -f /etc/redhat-release ]]; then
         OS_ID="centos"
         OS_VERSION=$(grep -oP '\d+' /etc/redhat-release | head -1)
+        IS_MACOS=false
     else
         OS_ID="unknown"
         OS_VERSION="unknown"
+        IS_MACOS=false
     fi
 
     ARCH=$(uname -m)
@@ -83,6 +92,28 @@ detect_os() {
 }
 
 # ── Dependency Installation ────────────────────────────────────────────
+install_deps_macos() {
+    step "安装系统依赖"
+    
+    # Check if Homebrew is installed
+    if ! command -v brew &>/dev/null; then
+        info "安装 Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        
+        # Add Homebrew to PATH for this session
+        if [[ -f /opt/homebrew/bin/brew ]]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        elif [[ -f /usr/local/bin/brew ]]; then
+            eval "$(/usr/local/bin/brew shellenv)"
+        fi
+    fi
+    
+    # Install dependencies via Homebrew
+    brew install -q git curl wget python3 ripgrep ffmpeg 2>/dev/null || true
+    
+    ok "macOS 依赖安装完成"
+}
+
 install_deps_debian() {
     step "安装系统依赖"
     # Fix any interrupted dpkg first
@@ -314,11 +345,21 @@ generate_config() {
 
 # 大模型配置
 model:
-  default: kopi-o
+  default: kopi-flash
   provider: custom
   base_url: https://kopi.readinghero.xyz/kp/v1
   api_key: ${KOPI_API_KEY}
   context_length: 256000
+
+# 备用节点（自动故障转移）
+providers:
+  node2:
+    provider: custom
+    base_url: http://159.223.32.193:5005/v1
+    api_key: ${KOPI_API_KEY}
+    context_length: 256000
+fallback_providers:
+  - node2
 
 # 代理配置
 agent:
@@ -343,11 +384,78 @@ security:
   approvals:
     mode: smart
 
-# 压缩配置
+# 压缩配置（PraisonAI 风格：自动压缩长对话）
 compression:
   enabled: true
   threshold: 0.50
   target_ratio: 0.20
+  auto_compact: true  # 自动压缩，避免 token 超限
+
+# Doom Loop Detection（借鉴 PraisonAI：卡住自动恢复）
+safety:
+  doom_loop_detection: true
+  max_same_tool_calls: 3  # 同一工具连续调用 3 次视为卡住
+  auto_recovery: true  # 自动重启 agent
+  timeout_per_turn: 300  # 单轮最大 5 分钟
+
+# Guardrails（借鉴 PraisonAI：智能验证）
+guardrails:
+  enabled: true
+  input:
+    max_length: 200000  # 输入最大 200K 字符（约 50K tokens）
+  output:
+    max_length: 200000  # 输出最大 200K 字符（代码生成需要）
+    strip_sensitive: true  # 自动脱敏（API key、密码等）
+  rate_limit:
+    max_requests_per_minute: 30  # 防滥用
+    max_tokens_per_hour: 500000  # 每小时 50 万 token 上限
+
+# Model Router（借鉴 PraisonAI：智能路由，自动选最便宜可用模型）
+model_router:
+  enabled: true
+  strategy: cost_optimized  # cost_optimized | latency_optimized | balanced
+  routes:
+    simple: kopi-flash      # 简单任务（问答、翻译）→ DeepSeek V4 Flash（免费）
+    coding: kopi-grok       # 代码任务 → Grok 4.3（MCP）
+    reasoning: kopi-grok    # 推理任务 → Grok 4.3（MCP）
+    standard: kopi-o-pro    # 标准任务 → MiMo V2 Pro
+  complexity_threshold: 0.7  # 复杂度阈值，超过则升级模型
+
+# Memory 增强（借鉴 PraisonAI：图记忆 + 长短期记忆）
+memory:
+  memory_enabled: true
+  user_profile_enabled: true
+  graph_memory: true  # 图数据库记忆（实体关系追踪）
+  short_term:
+    max_items: 50  # 短期记忆 50 条
+    ttl: 3600  # 1 小时过期
+  long_term:
+    max_items: 1000  # 长期记忆 1000 杇
+    auto_consolidate: true  # 自动合并相似记忆
+
+# Checkpoint（借鉴 PraisonAI：代码任务自动回滚）
+checkpoint:
+  enabled: true
+  auto_checkpoint: true  # 代码修改前自动保存
+  max_checkpoints: 10  # 保留最近 10 个检查点
+  auto_rollback_on_error: true  # 出错自动回滚
+
+# Session 管理（借鉴 PraisonAI：自动保存和恢复）
+session:
+  auto_save: true
+  save_interval: 300  # 每 5 分钟自动保存
+  max_history: 100  # 保留最近 100 轮对话
+  resume_on_restart: true  # 重启后自动恢复
+
+# MCP 服务器配置（Coding/推理/Grok 4.3）
+mcp:
+  servers:
+    kopi:
+      url: https://sub.readinghero.xyz/mcp/sse
+      headers:
+        Authorization: Bearer sk-mcp-eead7fc88a5efce316b5f3effcaba65f
+  auto_discover: true  # 自动发现 MCP 工具
+  timeout: 30  # MCP 调用超时 30 秒
 CONFIG
 
     # .env file
