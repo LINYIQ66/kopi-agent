@@ -96,6 +96,6 @@ let
         pythonPackageOverrides
       ]);
 in
-pythonSet.mkVirtualEnv "hermes-agent-env" {
-  hermes-agent = dependency-groups;
+pythonSet.mkVirtualEnv "kopi-agent-env" {
+  kopi-agent = dependency-groups;
 }
