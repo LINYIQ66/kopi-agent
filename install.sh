@@ -188,11 +188,41 @@ check_python() {
 install_python() {
     case "$OS_ID" in
         ubuntu|debian)
-            apt-get install -y -qq software-properties-common > /dev/null 2>&1
-            add-apt-repository -y ppa:deadsnakes/ppa > /dev/null 2>&1
+            if [[ "$IS_CHINA" == "true" ]]; then
+                # Use Tsinghua mirror for China
+                info "使用清华镜像源加速..."
+                sed -i 's|http://archive.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list 2>/dev/null || true
+                sed -i 's|http://security.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list 2>/dev/null || true
+                sed -i 's|http://ports.ubuntu.com|https://mirrors.tuna.tsinghua.edu.cn|g' /etc/apt/sources.list.d/*.list 2>/dev/null || true
+                # For ARM64 (aarch64) on Tencent Cloud, also fix ports.ubuntu.com
+                if [[ "$(uname -m)" == "aarch64" ]]; then
+                    sed -i 's|http://ports.ubuntu.com/ubuntu-ports|https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports|g' /etc/apt/sources.list.d/*.list 2>/dev/null || true
+                fi
+            fi
             apt-get update -qq
-            apt-get install -y -qq python3.11 python3.11-venv python3.11-dev > /dev/null 2>&1
-            PYTHON_CMD="python3.11"
+            # Try system python3 first (most Chinese VPS have it pre-installed)
+            if command -v python3.11 &>/dev/null; then
+                PYTHON_CMD="python3.11"
+            elif command -v python3.12 &>/dev/null; then
+                PYTHON_CMD="python3.12"
+            elif python3 --version 2>/dev/null | grep -qE "3\.(1[1-9]|[2-9][0-9])"; then
+                PYTHON_CMD="python3"
+            elif [[ "$IS_CHINA" == "true" ]]; then
+                # In China, PPA is unreliable — try deadsnakes but fallback to system python3
+                apt-get install -y -qq software-properties-common > /dev/null 2>&1
+                add-apt-repository -y ppa:deadsnakes/ppa > /dev/null 2>&1 || true
+                apt-get update -qq
+                apt-get install -y -qq python3.11 python3.11-venv python3.11-dev > /dev/null 2>&1 || \
+                apt-get install -y -qq python3 python3-venv python3-dev > /dev/null 2>&1 || \
+                fail "无法安装 Python，请手动安装: apt install python3 python3-venv"
+                PYTHON_CMD=$(command -v python3.11 || echo "python3")
+            else
+                apt-get install -y -qq software-properties-common > /dev/null 2>&1
+                add-apt-repository -y ppa:deadsnakes/ppa > /dev/null 2>&1
+                apt-get update -qq
+                apt-get install -y -qq python3.11 python3.11-venv python3.11-dev > /dev/null 2>&1
+                PYTHON_CMD="python3.11"
+            fi
             ;;
         centos|rhel|fedora|rocky|alma)
             dnf install -y -q python3.11 python3.11-devel 2>/dev/null || \
@@ -217,7 +247,15 @@ install_kopi() {
     else
         info "克隆仓库到 ${KOPI_HOME}..."
         rm -rf "$KOPI_HOME"
-        git clone --depth=1 "$REPO_URL" "$KOPI_HOME" --quiet
+        if [[ "$IS_CHINA" == "true" ]]; then
+            info "使用 GitHub 镜像加速..."
+            git clone --depth=1 "https://ghfast.top/${REPO_URL}" "$KOPI_HOME" --quiet 2>/dev/null || \
+            git clone --depth=1 "https://ghproxy.net/${REPO_URL}" "$KOPI_HOME" --quiet 2>/dev/null || \
+            git clone --depth=1 "$REPO_URL" "$KOPI_HOME" --quiet || \
+            fail "克隆失败，请检查网络"
+        else
+            git clone --depth=1 "$REPO_URL" "$KOPI_HOME" --quiet
+        fi
     fi
 
     cd "$KOPI_HOME"
@@ -228,7 +266,14 @@ install_kopi() {
 
     info "安装依赖（这可能需要几分钟）..."
     pip install --upgrade pip -q 2>/dev/null
-    pip install -e ".[all]" -q 2>/dev/null || pip install -e . -q 2>/dev/null
+    if [[ "$IS_CHINA" == "true" ]]; then
+        info "使用清华 PyPI 镜像加速..."
+        pip install -e ".[all]" -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn -q 2>/dev/null || \
+        pip install -e . -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn -q 2>/dev/null || \
+        pip install -e ".[all]" -q 2>/dev/null || pip install -e . -q 2>/dev/null
+    else
+        pip install -e ".[all]" -q 2>/dev/null || pip install -e . -q 2>/dev/null
+    fi
 
     ok "KOPI O Agent 安装完成"
 }
@@ -707,6 +752,7 @@ main() {
     fi
 
     detect_os
+    detect_china
     install_deps
     check_python
     install_kopi
