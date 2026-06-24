@@ -2163,6 +2163,7 @@ Environment="LOGNAME={username}"
 Environment="PATH={sane_path}"
 Environment="VIRTUAL_ENV={venv_dir}"
 Environment="KOPI_HOME={kopi_home}"
+EnvironmentFile=-{kopi_home}/.env
 Restart=always
 RestartSec=60
 RestartMaxDelaySec=300
@@ -2198,6 +2199,7 @@ WorkingDirectory={working_dir}
 Environment="PATH={sane_path}"
 Environment="VIRTUAL_ENV={venv_dir}"
 Environment="KOPI_HOME={kopi_home}"
+EnvironmentFile=-{kopi_home}/.env
 Restart=always
 RestartSec=60
 RestartMaxDelaySec=300
